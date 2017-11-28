@@ -285,7 +285,7 @@ public class Regimen extends javax.swing.JFrame {
             try {
                 Statement s = Conexion.obtener().createStatement();
                 PreparedStatement ps = Conexion.obtener().prepareStatement("UPDATE `regimen`"
-                    + "SET `RegDes` = '"+ descripcion.getText() +"', `TipTraEstReg` = '"+ estado.getText() +"'"
+                    + "SET `RegDes` = '"+ descripcion.getText() +"', `RegEstReg` = '"+ estado.getText() +"'"
                     + "WHERE `regimen`.`RegCod` = '"+ codigo.getText() +"'; ");
                 ps.execute();
                 ps = Conexion.obtener().prepareStatement("COMMIT;");
@@ -300,7 +300,7 @@ public class Regimen extends javax.swing.JFrame {
             try {
                 Statement s = Conexion.obtener().createStatement();
                 PreparedStatement ps = Conexion.obtener().prepareStatement("UPDATE `regimen`"
-                    + "SET `TipTraEstReg` = '*' "
+                    + "SET `RegEstReg` = '*' "
                     + "WHERE `regimen`.`RegCod` = '"+ codigo.getText() +"'; ");
                 ps.execute();
                 ps = Conexion.obtener().prepareStatement("COMMIT;");
@@ -315,8 +315,8 @@ public class Regimen extends javax.swing.JFrame {
             try {
                 Statement s = Conexion.obtener().createStatement();
                 PreparedStatement ps = Conexion.obtener().prepareStatement("UPDATE `regimen`"
-                    + "SET `TipTraEstReg` = 'I' "
-                    + "WHERE `tipo_trabajador`.`RegCod` = '"+ codigo.getText() +"'; ");
+                    + "SET `RegEstReg` = 'I' "
+                    + "WHERE `regimen`.`RegCod` = '"+ codigo.getText() +"'; ");
                 ps.execute();
                 ps = Conexion.obtener().prepareStatement("COMMIT;");
                 ps.execute();
@@ -330,7 +330,7 @@ public class Regimen extends javax.swing.JFrame {
             try {
                 Statement s = Conexion.obtener().createStatement();
                 PreparedStatement ps = Conexion.obtener().prepareStatement("UPDATE `regimen`"
-                    + "SET `TipTraEstReg` = 'A'"
+                    + "SET `RegEstReg` = 'A'"
                     + "WHERE `regimen`.`RegCod` = '"+ codigo.getText() +"'; ");
                 ps.execute();
                 ps = Conexion.obtener().prepareStatement("COMMIT;");

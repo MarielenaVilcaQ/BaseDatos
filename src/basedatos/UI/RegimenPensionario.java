@@ -1,6 +1,6 @@
 /*
  * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templatesss
+ * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
 package basedatos.UI;
@@ -9,12 +9,12 @@ package basedatos.UI;
  *
  * @author Marie
  */
-public class ContratoTrabajador extends javax.swing.JFrame {
+public class RegimenPensionario extends javax.swing.JFrame {
 
     /**
-     * Creates new form ContratoTrabajador
+     * Creates new form RegimenPensionario
      */
-    public ContratoTrabajador() {
+    public RegimenPensionario() {
         initComponents();
     }
 
@@ -60,20 +60,20 @@ public class ContratoTrabajador extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ContratoTrabajador.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(RegimenPensionario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ContratoTrabajador.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(RegimenPensionario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ContratoTrabajador.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(RegimenPensionario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ContratoTrabajador.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(RegimenPensionario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ContratoTrabajador().setVisible(true);
+                new RegimenPensionario().setVisible(true);
             }
         });
     }
