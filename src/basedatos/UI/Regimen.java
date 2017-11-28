@@ -285,7 +285,7 @@ public class Regimen extends javax.swing.JFrame {
             try {
                 Statement s = Conexion.obtener().createStatement();
                 PreparedStatement ps = Conexion.obtener().prepareStatement("UPDATE `regimen`"
-                    + "SET `TipTraDes` = '"+ descripcion.getText() +"', `TipTraEstReg` = '"+ estado.getText() +"'"
+                    + "SET `RegDes` = '"+ descripcion.getText() +"', `TipTraEstReg` = '"+ estado.getText() +"'"
                     + "WHERE `regimen`.`RegCod` = '"+ codigo.getText() +"'; ");
                 ps.execute();
                 ps = Conexion.obtener().prepareStatement("COMMIT;");
@@ -301,7 +301,7 @@ public class Regimen extends javax.swing.JFrame {
                 Statement s = Conexion.obtener().createStatement();
                 PreparedStatement ps = Conexion.obtener().prepareStatement("UPDATE `regimen`"
                     + "SET `TipTraEstReg` = '*' "
-                    + "WHERE `regimen`.`TipTraCod` = '"+ codigo.getText() +"'; ");
+                    + "WHERE `regimen`.`RegCod` = '"+ codigo.getText() +"'; ");
                 ps.execute();
                 ps = Conexion.obtener().prepareStatement("COMMIT;");
                 ps.execute();
@@ -316,7 +316,7 @@ public class Regimen extends javax.swing.JFrame {
                 Statement s = Conexion.obtener().createStatement();
                 PreparedStatement ps = Conexion.obtener().prepareStatement("UPDATE `regimen`"
                     + "SET `TipTraEstReg` = 'I' "
-                    + "WHERE `tipo_trabajador`.`TipTraCod` = '"+ codigo.getText() +"'; ");
+                    + "WHERE `tipo_trabajador`.`RegCod` = '"+ codigo.getText() +"'; ");
                 ps.execute();
                 ps = Conexion.obtener().prepareStatement("COMMIT;");
                 ps.execute();
@@ -331,7 +331,7 @@ public class Regimen extends javax.swing.JFrame {
                 Statement s = Conexion.obtener().createStatement();
                 PreparedStatement ps = Conexion.obtener().prepareStatement("UPDATE `regimen`"
                     + "SET `TipTraEstReg` = 'A'"
-                    + "WHERE `regimen`.`TipTraCod` = '"+ codigo.getText() +"'; ");
+                    + "WHERE `regimen`.`RegCod` = '"+ codigo.getText() +"'; ");
                 ps.execute();
                 ps = Conexion.obtener().prepareStatement("COMMIT;");
                 ps.execute();
@@ -345,7 +345,7 @@ public class Regimen extends javax.swing.JFrame {
             try {
                 Statement s = Conexion.obtener().createStatement();
                 PreparedStatement ps = Conexion.obtener().prepareStatement("INSERT INTO `regimen`"
-                    + "(`TipTraCod`, `TipTraDes`, `TipTraEstReg`)"
+                    + "(`RegCod`, `RegDes`, `RegEstReg`)"
                     + "VALUES ('"+ codigo.getText() +"', '"+ descripcion.getText() +"', '"+ estado.getText() +"');");
                 ps.execute();
                 ps = Conexion.obtener().prepareStatement("COMMIT;");
@@ -365,9 +365,9 @@ public class Regimen extends javax.swing.JFrame {
             DefaultTableModel model = new DefaultTableModel(new String[]{"Codigo", "Descripcion", "Estado de registro"}, 0);
             while(rs.next())
             {
-                String d = rs.getString("TipTraCod");
-                String e = rs.getString("TipTraDes");
-                String f = rs.getString("TipTraEstReg");
+                String d = rs.getString("RegCod");
+                String e = rs.getString("RegDes");
+                String f = rs.getString("RegEstReg");
                 model.addRow(new Object[]{d, e, f });
             }
             jTable1.setModel(model);
@@ -456,8 +456,8 @@ public class Regimen extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                TipoTrabajador tipoTrabajador = new TipoTrabajador();
-                tipoTrabajador.setTitle("Regimen");
+                Regimen regimen = new Regimen();
+                regimen.setTitle("Regimen");
                 try {
                 String sql = "SELECT * FROM regimen";
                 Statement s = Conexion.obtener().createStatement();
@@ -465,18 +465,18 @@ public class Regimen extends javax.swing.JFrame {
                 DefaultTableModel model = new DefaultTableModel(new String[]{"Codigo", "Descripcion", "Estado de registro"}, 0);
                 while(rs.next())
                 {
-                    String d = rs.getString("TipTraCod");
-                    String e = rs.getString("TipTraDes");
-                    String f = rs.getString("TipTraEstReg");
+                    String d = rs.getString("RegCod");
+                    String e = rs.getString("RegDes");
+                    String f = rs.getString("RegEstReg");
                     model.addRow(new Object[]{d, e, f });
                 }
-                tipoTrabajador.jTable1.setModel(model);
+                regimen.jTable1.setModel(model);
                 } catch (SQLException ex) {
                 Logger.getLogger(TipoTrabajador.class.getName()).log(Level.SEVERE, null, ex);
                 } catch (ClassNotFoundException ex) {
                 Logger.getLogger(TipoTrabajador.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                tipoTrabajador.setVisible(true);
+                regimen.setVisible(true);
             }
         });
     }
