@@ -284,9 +284,9 @@ public class Sindicalizado extends javax.swing.JFrame {
             case 'm':
             try {
                 Statement s = Conexion.obtener().createStatement();
-                PreparedStatement ps = Conexion.obtener().prepareStatement("UPDATE `tipo_trabajador`"
-                    + "SET `TipTraDes` = '"+ descripcion.getText() +"', `TipTraEstReg` = '"+ estado.getText() +"'"
-                    + "WHERE `tipo_trabajador`.`TipTraCod` = '"+ codigo.getText() +"'; ");
+                PreparedStatement ps = Conexion.obtener().prepareStatement("UPDATE `sindicalizado`"
+                    + "SET `SinDes` = '"+ descripcion.getText() +"', `SinEstReg` = '"+ estado.getText() +"'"
+                    + "WHERE `sindicalizado`.`SinCod` = '"+ codigo.getText() +"'; ");
                 ps.execute();
                 ps = Conexion.obtener().prepareStatement("COMMIT;");
                 ps.execute();
@@ -299,9 +299,9 @@ public class Sindicalizado extends javax.swing.JFrame {
             case 'e':
             try {
                 Statement s = Conexion.obtener().createStatement();
-                PreparedStatement ps = Conexion.obtener().prepareStatement("UPDATE `tipo_trabajador`"
-                    + "SET `TipTraEstReg` = '*' "
-                    + "WHERE `tipo_trabajador`.`TipTraCod` = '"+ codigo.getText() +"'; ");
+                PreparedStatement ps = Conexion.obtener().prepareStatement("UPDATE `sindicalizado`"
+                    + "SET `SinEstReg` = '*' "
+                    + "WHERE `sindicalizado`.`SinCod` = '"+ codigo.getText() +"'; ");
                 ps.execute();
                 ps = Conexion.obtener().prepareStatement("COMMIT;");
                 ps.execute();
@@ -314,9 +314,9 @@ public class Sindicalizado extends javax.swing.JFrame {
             case 'i':
             try {
                 Statement s = Conexion.obtener().createStatement();
-                PreparedStatement ps = Conexion.obtener().prepareStatement("UPDATE `tipo_trabajador`"
-                    + "SET `TipTraEstReg` = 'I' "
-                    + "WHERE `tipo_trabajador`.`TipTraCod` = '"+ codigo.getText() +"'; ");
+                PreparedStatement ps = Conexion.obtener().prepareStatement("UPDATE `sindicalizado`"
+                    + "SET `SinEstReg` = 'I' "
+                    + "WHERE `sindicalizado`.`SinCod` = '"+ codigo.getText() +"'; ");
                 ps.execute();
                 ps = Conexion.obtener().prepareStatement("COMMIT;");
                 ps.execute();
@@ -329,9 +329,9 @@ public class Sindicalizado extends javax.swing.JFrame {
             case 'r':
             try {
                 Statement s = Conexion.obtener().createStatement();
-                PreparedStatement ps = Conexion.obtener().prepareStatement("UPDATE `tipo_trabajador`"
-                    + "SET `TipTraEstReg` = 'A'"
-                    + "WHERE `tipo_trabajador`.`TipTraCod` = '"+ codigo.getText() +"'; ");
+                PreparedStatement ps = Conexion.obtener().prepareStatement("UPDATE `sindicalizado`"
+                    + "SET `SinEstReg` = 'A'"
+                    + "WHERE `sindicalizado`.`SinCod` = '"+ codigo.getText() +"'; ");
                 ps.execute();
                 ps = Conexion.obtener().prepareStatement("COMMIT;");
                 ps.execute();
@@ -344,8 +344,8 @@ public class Sindicalizado extends javax.swing.JFrame {
             case 'a':
             try {
                 Statement s = Conexion.obtener().createStatement();
-                PreparedStatement ps = Conexion.obtener().prepareStatement("INSERT INTO `tipo_trabajador`"
-                    + "(`TipTraCod`, `TipTraDes`, `TipTraEstReg`)"
+                PreparedStatement ps = Conexion.obtener().prepareStatement("INSERT INTO `sindicalizado`"
+                    + "(`SinCod`, `SinDes`, `SinEstReg`)"
                     + "VALUES ('"+ codigo.getText() +"', '"+ descripcion.getText() +"', '"+ estado.getText() +"');");
                 ps.execute();
                 ps = Conexion.obtener().prepareStatement("COMMIT;");
@@ -359,15 +359,15 @@ public class Sindicalizado extends javax.swing.JFrame {
 
         }
         try {
-            String sql = "SELECT * FROM tipo_trabajador";
+            String sql = "SELECT * FROM sindicalizado";
             Statement s = Conexion.obtener().createStatement();
             ResultSet rs = s.executeQuery(sql);
             DefaultTableModel model = new DefaultTableModel(new String[]{"Codigo", "Descripcion", "Estado de registro"}, 0);
             while(rs.next())
             {
-                String d = rs.getString("TipTraCod");
-                String e = rs.getString("TipTraDes");
-                String f = rs.getString("TipTraEstReg");
+                String d = rs.getString("SinCod");
+                String e = rs.getString("SinDes");
+                String f = rs.getString("SinEstReg");
                 model.addRow(new Object[]{d, e, f });
             }
             jTable1.setModel(model);
@@ -457,17 +457,17 @@ public class Sindicalizado extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 Sindicalizado sindicalizado = new Sindicalizado();
-                sindicalizado.setTitle("Tipo de Trabajador");
+                sindicalizado.setTitle("¿Es sindicalizado?");
                 try {
-                String sql = "SELECT * FROM tipo_trabajador";
+                String sql = "SELECT * FROM sindicalizado";
                 Statement s = Conexion.obtener().createStatement();
                 ResultSet rs = s.executeQuery(sql);
                 DefaultTableModel model = new DefaultTableModel(new String[]{"Codigo", "Descripcion", "Estado de registro"}, 0);
                 while(rs.next())
                 {
-                    String d = rs.getString("TipTraCod");
-                    String e = rs.getString("TipTraDes");
-                    String f = rs.getString("TipTraEstReg");
+                    String d = rs.getString("SinCod");
+                    String e = rs.getString("SinDes");
+                    String f = rs.getString("SinEstReg");
                     model.addRow(new Object[]{d, e, f });
                 }
                 sindicalizado.jTable1.setModel(model);
