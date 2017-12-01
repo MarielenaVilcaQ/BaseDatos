@@ -298,13 +298,13 @@ public class TipoRegimenPensionario extends javax.swing.JFrame {
             case 'm':
             try {
                 Statement s = Conexion.obtener().createStatement();
-                PreparedStatement ps = Conexion.obtener().prepareStatement("UPDATE `tipo_regimen_pensionario`"
-                    + "SET `afp_AfpCod` = '"+ codigoafp.getText() +"', `TipRegPenDes` = '"
-                    + descripcion.getText()+"', `TipRegPenEstReg` = '"+ estado.getText() +"'"
-                    + "WHERE `tipo_regimen_pensionario`.`TipRegPenCod` = '"+ codigo.getText() +"'; ");
-                ps.execute();
-                ps = Conexion.obtener().prepareStatement("COMMIT;");
-                ps.execute();
+                //PreparedStatement ps = Conexion.obtener().prepareStatement("UPDATE `tipo_regimen_pensionario`"
+                //    + "SET `afp_AfpCod` = '"+ codigoafp.getText() +"', `TipRegPenDes` = '"
+                //    + descripcion.getText()+"', `TipRegPenEstReg` = '"+ estado.getText() +"'"
+                //    + "WHERE `tipo_regimen_pensionario`.`TipRegPenCod` = '"+ codigo.getText() +"'; ");
+                //ps.execute();
+                //ps = Conexion.obtener().prepareStatement("COMMIT;");
+                //ps.execute();
             } catch (SQLException ex) {
                 Logger.getLogger(TipoTrabajador.class.getName()).log(Level.SEVERE, null, ex);
             } catch (ClassNotFoundException ex) {
@@ -359,13 +359,13 @@ public class TipoRegimenPensionario extends javax.swing.JFrame {
             case 'a':
             try {
                 Statement s = Conexion.obtener().createStatement();
-                PreparedStatement ps = Conexion.obtener().prepareStatement("INSERT INTO `tipo_regimen_pensionario`"
-                    + "(`TipRegPenCod`, `afp_AfpCod`, `TipRegPenDes`, `TipRegPenEstReg`)"
-                    + "VALUES ('"+ codigo.getText() +"', '"+ codigoafp.getText()
-                    +"','"+ descripcion.getText() +"', '"+ estado.getText() +"');");
-                ps.execute();
-                ps = Conexion.obtener().prepareStatement("COMMIT;");
-                ps.execute();
+                //PreparedStatement ps = Conexion.obtener().prepareStatement("INSERT INTO `tipo_regimen_pensionario`"
+                //    + "(`TipRegPenCod`, `afp_AfpCod`, `TipRegPenDes`, `TipRegPenEstReg`)"
+                //    + "VALUES ('"+ codigo.getText() +"', '"+ codigoafp.getText()
+                //    +"','"+ descripcion.getText() +"', '"+ estado.getText() +"');");
+                //ps.execute();
+                //ps = Conexion.obtener().prepareStatement("COMMIT;");
+                //ps.execute();
             } catch (SQLException ex) {
                 Logger.getLogger(TipoTrabajador.class.getName()).log(Level.SEVERE, null, ex);
             } catch (ClassNotFoundException ex) {
