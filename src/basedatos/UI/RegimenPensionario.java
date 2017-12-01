@@ -281,7 +281,7 @@ public class RegimenPensionario extends javax.swing.JFrame {
             String g = rs.getString("TipRegPenEstReg");;
             model.addRow(new Object[]{d, e, f, g});
         }
-        trp.getJTable().setModel(model);
+        trp.getJTable().setModel(model); 
         } catch (SQLException ex) {
         Logger.getLogger(NivelEducativo.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {

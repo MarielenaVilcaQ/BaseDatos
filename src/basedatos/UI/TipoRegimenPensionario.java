@@ -573,7 +573,7 @@ public class TipoRegimenPensionario extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                TipoRegimenPensionario trp = new TipoRegimenPensionario();
+                TipoRegimenPensionario trp = new TipoRegimenPensionario(); 
                 trp.setTitle("Tipo regimen pensionario");
                 try {
                 String sql = "SELECT TipRegPenCod, AfpDes, TipRegPenDes, TipRegPenEstReg "
