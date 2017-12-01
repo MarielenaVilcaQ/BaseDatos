@@ -17,12 +17,12 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author Marie
  */
-public class Discapacidad extends javax.swing.JFrame {
+public class Sino extends javax.swing.JFrame {
     char flag = '_';
     /**
-     * Creates new form Discapacidad
+     * Creates new form Sindicalizado
      */
-    public Discapacidad() {
+    public Sino() {
         initComponents();
     }
 
@@ -278,14 +278,15 @@ public class Discapacidad extends javax.swing.JFrame {
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(TipoTrabajador.class.getName()).log(Level.SEVERE, null, ex);
         }
+
         switch(flag)
         {
             case 'm':
             try {
                 Statement s = Conexion.obtener().createStatement();
-                PreparedStatement ps = Conexion.obtener().prepareStatement("UPDATE `discapacidad`"
-                    + "SET `DisDes` = '"+ descripcion.getText() +"', `DisEstReg` = '"+ estado.getText() +"'"
-                    + "WHERE `discapacidad`.`DisCod` = '"+ codigo.getText() +"'; ");
+                PreparedStatement ps = Conexion.obtener().prepareStatement("UPDATE `sino`"
+                    + "SET `SinDes` = '"+ descripcion.getText() +"', `SinEstReg` = '"+ estado.getText() +"'"
+                    + "WHERE `sino`.`SinCod` = '"+ codigo.getText() +"'; ");
                 ps.execute();
                 ps = Conexion.obtener().prepareStatement("COMMIT;");
                 ps.execute();
@@ -298,75 +299,75 @@ public class Discapacidad extends javax.swing.JFrame {
             case 'e':
             try {
                 Statement s = Conexion.obtener().createStatement();
-                PreparedStatement ps = Conexion.obtener().prepareStatement("UPDATE `discapacidad`"
-                    + "SET `DisEstReg` = '*' "
-                    + "WHERE `discapacidad`.`DisCod` = '"+ codigo.getText() +"'; ");
+                PreparedStatement ps = Conexion.obtener().prepareStatement("UPDATE `sino`"
+                    + "SET `SinEstReg` = '*' "
+                    + "WHERE `sino`.`SinCod` = '"+ codigo.getText() +"'; ");
                 ps.execute();
                 ps = Conexion.obtener().prepareStatement("COMMIT;");
                 ps.execute();
             } catch (SQLException ex) {
-                Logger.getLogger(Discapacidad.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(TipoTrabajador.class.getName()).log(Level.SEVERE, null, ex);
             } catch (ClassNotFoundException ex) {
-                Logger.getLogger(Discapacidad.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(TipoTrabajador.class.getName()).log(Level.SEVERE, null, ex);
             }
             break;
             case 'i':
             try {
                 Statement s = Conexion.obtener().createStatement();
-                PreparedStatement ps = Conexion.obtener().prepareStatement("UPDATE `discapacidad`"
-                    + "SET `DisEstReg` = 'I' "
-                    + "WHERE `discapacidad`.`DisCod` = '"+ codigo.getText() +"'; ");
+                PreparedStatement ps = Conexion.obtener().prepareStatement("UPDATE `sino`"
+                    + "SET `SinEstReg` = 'I' "
+                    + "WHERE `sino`.`SinCod` = '"+ codigo.getText() +"'; ");
                 ps.execute();
                 ps = Conexion.obtener().prepareStatement("COMMIT;");
                 ps.execute();
             } catch (SQLException ex) {
-                Logger.getLogger(Discapacidad.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(TipoTrabajador.class.getName()).log(Level.SEVERE, null, ex);
             } catch (ClassNotFoundException ex) {
-                Logger.getLogger(Discapacidad.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(TipoTrabajador.class.getName()).log(Level.SEVERE, null, ex);
             }
             break;
             case 'r':
             try {
                 Statement s = Conexion.obtener().createStatement();
-                PreparedStatement ps = Conexion.obtener().prepareStatement("UPDATE `discapacidad`"
-                    + "SET `DisEstReg` = 'A'"
-                    + "WHERE `discapacidad`.`DisCod` = '"+ codigo.getText() +"'; ");
+                PreparedStatement ps = Conexion.obtener().prepareStatement("UPDATE `sino`"
+                    + "SET `SinEstReg` = 'A'"
+                    + "WHERE `sino`.`SinCod` = '"+ codigo.getText() +"'; ");
                 ps.execute();
                 ps = Conexion.obtener().prepareStatement("COMMIT;");
                 ps.execute();
             } catch (SQLException ex) {
-                Logger.getLogger(Discapacidad.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(TipoTrabajador.class.getName()).log(Level.SEVERE, null, ex);
             } catch (ClassNotFoundException ex) {
-                Logger.getLogger(Discapacidad.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(TipoTrabajador.class.getName()).log(Level.SEVERE, null, ex);
             }
             break;
             case 'a':
             try {
                 Statement s = Conexion.obtener().createStatement();
-                PreparedStatement ps = Conexion.obtener().prepareStatement("INSERT INTO `discapacidad`"
-                    + "(`DisCod`, `DisDes`, `DisEstReg`)"
+                PreparedStatement ps = Conexion.obtener().prepareStatement("INSERT INTO `sino`"
+                    + "(`SinCod`, `SinDes`, `SinEstReg`)"
                     + "VALUES ('"+ codigo.getText() +"', '"+ descripcion.getText() +"', '"+ estado.getText() +"');");
                 ps.execute();
                 ps = Conexion.obtener().prepareStatement("COMMIT;");
                 ps.execute();
             } catch (SQLException ex) {
-                Logger.getLogger(Discapacidad.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(TipoTrabajador.class.getName()).log(Level.SEVERE, null, ex);
             } catch (ClassNotFoundException ex) {
-                Logger.getLogger(Discapacidad.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(TipoTrabajador.class.getName()).log(Level.SEVERE, null, ex);
             }
             default:
 
         }
         try {
-            String sql = "SELECT * FROM discapacidad";
+            String sql = "SELECT * FROM sino";
             Statement s = Conexion.obtener().createStatement();
             ResultSet rs = s.executeQuery(sql);
             DefaultTableModel model = new DefaultTableModel(new String[]{"Codigo", "Descripcion", "Estado de registro"}, 0);
             while(rs.next())
             {
-                String d = rs.getString("DisCod");
-                String e = rs.getString("DisDes");
-                String f = rs.getString("DisEstReg");
+                String d = rs.getString("SinCod");
+                String e = rs.getString("SinDes");
+                String f = rs.getString("SinEstReg");
                 model.addRow(new Object[]{d, e, f });
             }
             jTable1.setModel(model);
@@ -374,9 +375,9 @@ public class Discapacidad extends javax.swing.JFrame {
             descripcion.setText("");
             estado.setText("");
         } catch (SQLException ex) {
-            Logger.getLogger(Discapacidad.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(TipoTrabajador.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(Discapacidad.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(TipoTrabajador.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         flag = '_';
@@ -442,40 +443,41 @@ public class Discapacidad extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Discapacidad.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Sino.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Discapacidad.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Sino.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Discapacidad.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Sino.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Discapacidad.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Sino.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                Discapacidad discapacidad = new Discapacidad();
-                discapacidad.setTitle("Discapacidad");
+                Sino sino = new Sino();
+                sino.setTitle("SINO");
                 try {
-                String sql = "SELECT * FROM discapacidad";
+                String sql = "SELECT * FROM sino";
                 Statement s = Conexion.obtener().createStatement();
                 ResultSet rs = s.executeQuery(sql);
                 DefaultTableModel model = new DefaultTableModel(new String[]{"Codigo", "Descripcion", "Estado de registro"}, 0);
                 while(rs.next())
                 {
-                    String d = rs.getString("DisCod");
-                    String e = rs.getString("DisDes");
-                    String f = rs.getString("DisEstReg");
+                    String d = rs.getString("SinCod");
+                    String e = rs.getString("SinDes");
+                    String f = rs.getString("SinEstReg");
                     model.addRow(new Object[]{d, e, f });
                 }
-                discapacidad.jTable1.setModel(model);
+                sino.jTable1.setModel(model);
                 } catch (SQLException ex) {
-                Logger.getLogger(Discapacidad.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(TipoTrabajador.class.getName()).log(Level.SEVERE, null, ex);
                 } catch (ClassNotFoundException ex) {
-                Logger.getLogger(Discapacidad.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(TipoTrabajador.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                discapacidad.setVisible(true);
+                sino.setVisible(true);
             }
         });
     }

@@ -138,8 +138,8 @@
               <Table columnCount="5" rowCount="0">
                 <Column editable="false" title="Codigo" type="java.lang.String"/>
                 <Column editable="false" title="Departamento" type="java.lang.String"/>
-                <Column editable="false" title="Provincia" type="java.lang.Object"/>
-                <Column editable="false" title="Distrito" type="java.lang.Object"/>
+                <Column editable="false" title="Provincia" type="java.lang.String"/>
+                <Column editable="false" title="Distrito" type="java.lang.String"/>
                 <Column editable="false" title="Estado de registro" type="java.lang.String"/>
               </Table>
             </Property>
