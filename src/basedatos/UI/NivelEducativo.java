@@ -11,6 +11,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JTable;
 //import javax.swing.JFrame;
 import javax.swing.table.DefaultTableModel;
 /**
@@ -54,7 +55,7 @@ public class NivelEducativo extends javax.swing.JFrame {
         nivel = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         codigo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -446,7 +447,7 @@ public class NivelEducativo extends javax.swing.JFrame {
     }//GEN-LAST:event_actualizarActionPerformed
 
     private void salirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salirActionPerformed
-        System.exit(0);
+        this.dispose();
     }//GEN-LAST:event_salirActionPerformed
 
     private void estadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_estadoActionPerformed
@@ -457,6 +458,10 @@ public class NivelEducativo extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_nivelActionPerformed
 
+    public JTable getJTable () {
+        return jTable1;
+    }
+    
     /**
      * @param args the command line arguments
      */
