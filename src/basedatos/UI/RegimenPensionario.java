@@ -5,11 +5,27 @@
  */
 package basedatos.UI;
 
+import basedatos.Clases.AFP;
+import basedatos.Clases.TipoRegimen;
+import basedatos.Conexion;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Marie
  */
 public class RegimenPensionario extends javax.swing.JFrame {
+    
+    char flag = '_';
+     ArrayList<TipoRegimen> tipoRegimen;
 
     /**
      * Creates new form RegimenPensionario
@@ -28,17 +44,17 @@ public class RegimenPensionario extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        spp_cuspp = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
+        Text_spp_cuspp = new javax.swing.JLabel();
+        codigo = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jSpinner1 = new javax.swing.JSpinner();
+        dia = new javax.swing.JSpinner();
         jLabel6 = new javax.swing.JLabel();
-        jSpinner2 = new javax.swing.JSpinner();
+        mes = new javax.swing.JSpinner();
         jLabel7 = new javax.swing.JLabel();
-        jSpinner3 = new javax.swing.JSpinner();
+        anio = new javax.swing.JSpinner();
         jButton1 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
@@ -50,19 +66,21 @@ public class RegimenPensionario extends javax.swing.JFrame {
         jButton7 = new javax.swing.JButton();
         jButton8 = new javax.swing.JButton();
         jButton9 = new javax.swing.JButton();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jTextField4 = new javax.swing.JTextField();
+        comboBox_TipoRegimen = new javax.swing.JComboBox<>();
+        jButton10 = new javax.swing.JButton();
+        jLabel8 = new javax.swing.JLabel();
+        estado = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
         jLabel1.setText("Codigo");
 
-        jLabel2.setText("Tipo de AFP");
+        jLabel2.setText("Tipo de regimen pensionario");
 
-        jLabel3.setText("SPP - CUSPP");
+        Text_spp_cuspp.setText("SPP - CUSPP");
 
-        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel4.setText("Fecha de inscripcion\nal regimen pensionario");
 
         jLabel5.setText("dia: ");
@@ -71,7 +89,12 @@ public class RegimenPensionario extends javax.swing.JFrame {
 
         jLabel7.setText("ano:");
 
-        jButton1.setText("Codigo AFP");
+        jButton1.setText("Modificar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -87,6 +110,11 @@ public class RegimenPensionario extends javax.swing.JFrame {
         jScrollPane1.setViewportView(jTable1);
 
         jButton2.setText("Adicionar");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jButton3.setText("Modificar");
 
@@ -104,12 +132,26 @@ public class RegimenPensionario extends javax.swing.JFrame {
         jButton7.setText("Reactivar");
 
         jButton8.setText("Actualizar");
+        jButton8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton8ActionPerformed(evt);
+            }
+        });
 
         jButton9.setText("Salir");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "AFP", "ONP" }));
+        comboBox_TipoRegimen.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        jTextField4.setEnabled(false);
+        jButton10.setText("Actualizar Grillas");
+        jButton10.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton10ActionPerformed(evt);
+            }
+        });
+
+        jLabel8.setText("Estado de Registro");
+
+        estado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "A", "I", "*" }));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -118,51 +160,52 @@ public class RegimenPensionario extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(25, 25, 25)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButton8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton7, javax.swing.GroupLayout.DEFAULT_SIZE, 105, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 483, Short.MAX_VALUE)
                     .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3)
+                            .addComponent(Text_spp_cuspp)
                             .addComponent(jLabel2)
                             .addComponent(jLabel1))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextField3)
+                            .addComponent(codigo)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(comboBox_TipoRegimen, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextField4)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jTextField1)))
+                                .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(spp_cuspp)))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(dia, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel6)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jSpinner2, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(mes, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel7)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jSpinner3)))
+                        .addComponent(anio, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel8)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(estado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButton8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jButton6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButton3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButton10, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButton9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButton7, javax.swing.GroupLayout.DEFAULT_SIZE, 173, Short.MAX_VALUE))))
                 .addGap(25, 25, 25))
         );
         layout.setVerticalGroup(
@@ -171,27 +214,28 @@ public class RegimenPensionario extends javax.swing.JFrame {
                 .addGap(25, 25, 25)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(codigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(jButton1)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(comboBox_TipoRegimen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(Text_spp_cuspp)
+                    .addComponent(spp_cuspp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
-                    .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(dia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6)
-                    .addComponent(jSpinner2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(mes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel7)
-                    .addComponent(jSpinner3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(anio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel8)
+                    .addComponent(estado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -207,7 +251,8 @@ public class RegimenPensionario extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton8)
-                    .addComponent(jButton9))
+                    .addComponent(jButton9)
+                    .addComponent(jButton10))
                 .addContainerGap(30, Short.MAX_VALUE))
         );
 
@@ -219,6 +264,203 @@ public class RegimenPensionario extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton5ActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        TipoRegimenPensionario trp = new TipoRegimenPensionario();
+        trp.setTitle("Tipo regimen pensionario");
+        try {
+        String sql = "SELECT TipRegPenCod, AfpDes, TipRegPenDes, TipRegPenEstReg "
+            + "FROM tipo_regimen_pensionario, afp WHERE tipo_regimen_pensionario.afp_AfpCod = afp.AfpCod";
+        Statement s = Conexion.obtener().createStatement();
+        ResultSet rs = s.executeQuery(sql);
+        DefaultTableModel model = new DefaultTableModel(new String[]{"Codigo", "AFP","Descripcion", "Estado de registro"}, 0);
+        while(rs.next())
+        {
+            String d = rs.getString("TipRegPenCod");
+            String e = rs.getString("AfpDes");
+            String f = rs.getString("TipRegPenDes");
+            String g = rs.getString("TipRegPenEstReg");;
+            model.addRow(new Object[]{d, e, f, g});
+        }
+        trp.getJTable().setModel(model);
+        } catch (SQLException ex) {
+        Logger.getLogger(NivelEducativo.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+        Logger.getLogger(NivelEducativo.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        trp.comboBox_afp();
+        trp.setVisible(true);
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
+        comboBox_TipoRegimen();
+    }//GEN-LAST:event_jButton10ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        flag = 'a';
+        codigo.setText("");
+        spp_cuspp.setText("");
+        estado.setSelectedIndex(0);
+        codigo.setEditable(true);
+        spp_cuspp.setEnabled(true);
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+        try {
+            PreparedStatement ps = Conexion.obtener().prepareStatement("START TRANSACTION;");
+            ps.execute();
+        } catch (SQLException ex) {
+            Logger.getLogger(TipoTrabajador.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(TipoTrabajador.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        switch(flag)
+        {
+            case 'm':
+            try {
+                Statement s = Conexion.obtener().createStatement();
+                //PreparedStatement ps = Conexion.obtener().prepareStatement("UPDATE `tipo_regimen_pensionario`"
+                //    + "SET `afp_AfpCod` = '"+ codigoafp.getText() +"', `TipRegPenDes` = '"
+                //    + descripcion.getText()+"', `TipRegPenEstReg` = '"+ estado.getText() +"'"
+                //    + "WHERE `tipo_regimen_pensionario`.`TipRegPenCod` = '"+ codigo.getText() +"'; ");
+                //ps.execute();
+                //ps = Conexion.obtener().prepareStatement("COMMIT;");
+                //ps.execute();
+            } catch (SQLException ex) {
+                Logger.getLogger(TipoTrabajador.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(TipoTrabajador.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            break;
+            case 'e':
+            try {
+                Statement s = Conexion.obtener().createStatement();
+                PreparedStatement ps = Conexion.obtener().prepareStatement("UPDATE `tipo_regimen_pensionario`"
+                    + "SET `TipRegPenEstReg` = '*' "
+                    + "WHERE `tipo_regimen_pensionario`.`TipRegPenCod` = '"+ codigo.getText() +"'; ");
+                ps.execute();
+                ps = Conexion.obtener().prepareStatement("COMMIT;");
+                ps.execute();
+            } catch (SQLException ex) {
+                Logger.getLogger(TipoTrabajador.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(TipoTrabajador.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            break;
+            case 'i':
+            try {
+                Statement s = Conexion.obtener().createStatement();
+                PreparedStatement ps = Conexion.obtener().prepareStatement("UPDATE `tipo_regimen_pensionarioo`"
+                    + "SET `TipRegPenEstReg` = 'I' "
+                    + "WHERE `tipo_regimen_pensionario`.`TipRegPenCod` = '"+ codigo.getText() +"'; ");
+                ps.execute();
+                ps = Conexion.obtener().prepareStatement("COMMIT;");
+                ps.execute();
+            } catch (SQLException ex) {
+                Logger.getLogger(TipoTrabajador.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(TipoTrabajador.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            break;
+            case 'r':
+            try {
+                Statement s = Conexion.obtener().createStatement();
+                PreparedStatement ps = Conexion.obtener().prepareStatement("UPDATE `tipo_regimen_pensionario`"
+                    + "SET `TipRegPenEstReg` = 'A'"
+                    + "WHERE `tipo_regimen_pensionario`.`TipRegPenCod` = '"+ codigo.getText() +"'; ");
+                ps.execute();
+                ps = Conexion.obtener().prepareStatement("COMMIT;");
+                ps.execute();
+            } catch (SQLException ex) {
+                Logger.getLogger(TipoTrabajador.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(TipoTrabajador.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            break;
+            case 'a':
+            try {
+                //Buscar codigo
+                String seleccionado = "00";
+                for (TipoRegimen tipoRegimen : tipoRegimen) {
+                    if (tipoRegimen.getTipRegPenDes().equals(comboBox_TipoRegimen.getSelectedItem().toString()))
+                        seleccionado = tipoRegimen.getTipRegPenCod();
+                }
+                Statement s = Conexion.obtener().createStatement();
+                PreparedStatement ps = Conexion.obtener().prepareStatement("INSERT INTO `regimen_pensionario` "
+                        + "(`RegPenCod`, `RegPenSppCus`, `RegPenFecInsAnio`, `RegPenFecInsMes`, "
+                        + "`RegPenFecInsDia`, `RegPenEstReg`, `TIPO_REGIMEN_PENSIONARIO_TipRegPenCod`) "
+                        + "VALUES ('" + codigo.getText() + "', '" + Text_spp_cuspp.getText() + "', '" + anio.getValue() + "', '"
+                        + mes.getValue() + "', '" + dia.getValue() + "', '" + estado.getSelectedItem() + "', '" + seleccionado + "');");
+                ps.execute();
+                ps = Conexion.obtener().prepareStatement("COMMIT;");
+                ps.execute();
+            } catch (SQLException ex) {
+                Logger.getLogger(TipoTrabajador.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(TipoTrabajador.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            default:
+
+        }
+        try {
+            String sql = "SELECT * FROM regimen_pensionario";
+            Statement s = Conexion.obtener().createStatement();
+            ResultSet rs = s.executeQuery(sql);
+            DefaultTableModel model = new DefaultTableModel(new String[]{"Codigo", "SPP CUS","ANO", "MES", "DIA", "Estado", "Tipo"}, 0);
+            while(rs.next())
+            {
+                String d = rs.getString("RegPenCod");
+                String e = rs.getString("RegPenSppCus");
+                String f = rs.getString("RegPenFecInsAnio");
+                String g = rs.getString("RegPenFecInsMes");
+                String h = rs.getString("RegPenFecInsDia");
+                String i = rs.getString("RegPenEstReg");
+                String j = rs.getString("TIPO_REGIMEN_PENSIONARIO_TipRegPenCod");
+                model.addRow(new Object[]{d, e, f, g, h, i, j});
+            }
+            jTable1.setModel(model);
+            codigo.setText("");
+            
+            spp_cuspp.setText("");
+            estado.setSelectedIndex(-1);
+        } catch (SQLException ex) {
+            Logger.getLogger(TipoTrabajador.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(TipoTrabajador.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        flag = '_';
+    }//GEN-LAST:event_jButton8ActionPerformed
+
+    public void comboBox_TipoRegimen() {
+        try {
+            tipoRegimen = new ArrayList<TipoRegimen>();
+            String sql = "SELECT * FROM tipo_regimen_pensionario";
+            Statement s = Conexion.obtener().createStatement();
+            ResultSet rs = s.executeQuery(sql);
+            while(rs.next())
+            {
+                if (rs.getString("TipRegPenEstReg").equals("A")) {
+                    tipoRegimen.add(new TipoRegimen (rs.getString("TipRegPenCod"), rs.getString("TipRegPenDes"),
+                            rs.getString("TipRegPenEstReg"), rs.getString("afp_AfpCod")));
+                }
+            }
+            String [] arrPais = new String [tipoRegimen.size()];
+            for (int i = 0; i < arrPais.length; i++) {
+                arrPais[i] = tipoRegimen.get(i).getTipRegPenDes();
+            }
+            comboBox_TipoRegimen.setModel(new javax.swing.DefaultComboBoxModel(arrPais));;
+        } catch (SQLException ex) {
+        Logger.getLogger(TipoDocumento.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+        Logger.getLogger(TipoDocumento.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public JTable getJTable () {
+        return jTable1;
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -251,13 +493,43 @@ public class RegimenPensionario extends javax.swing.JFrame {
             public void run() {
                 RegimenPensionario regimenPensionario = new RegimenPensionario();
                 regimenPensionario.setTitle("Regimen Pensionario");
+                try {
+                    String sql = "SELECT * FROM regimen_pensionario";
+                    Statement s = Conexion.obtener().createStatement();
+                    ResultSet rs = s.executeQuery(sql);
+                    DefaultTableModel model = new DefaultTableModel(new String[]{"Codigo", "SPP CUS","ANO", "MES", "DIA", "Estado", "Tipo"}, 0);
+                    while(rs.next())
+                    {
+                        String d = rs.getString("RegPenCod");
+                        String e = rs.getString("RegPenSppCus");
+                        String f = rs.getString("RegPenFecInsAnio");
+                        String g = rs.getString("RegPenFecInsMes");
+                        String h = rs.getString("RegPenFecInsDia");
+                        String i = rs.getString("RegPenEstReg");
+                        String j = rs.getString("TIPO_REGIMEN_PENSIONARIO_TipRegPenCod");
+                        model.addRow(new Object[]{d, e, f, g, h, i, j});
+                    }
+                    regimenPensionario.jTable1.setModel(model);
+                } catch (SQLException ex) {
+                    Logger.getLogger(NivelEducativo.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(NivelEducativo.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                regimenPensionario.comboBox_TipoRegimen();
                 regimenPensionario.setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel Text_spp_cuspp;
+    private javax.swing.JSpinner anio;
+    private javax.swing.JTextField codigo;
+    private javax.swing.JComboBox<String> comboBox_TipoRegimen;
+    private javax.swing.JSpinner dia;
+    private javax.swing.JComboBox<String> estado;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
@@ -266,21 +538,16 @@ public class RegimenPensionario extends javax.swing.JFrame {
     private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
     private javax.swing.JButton jButton9;
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JSpinner jSpinner1;
-    private javax.swing.JSpinner jSpinner2;
-    private javax.swing.JSpinner jSpinner3;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
+    private javax.swing.JSpinner mes;
+    private javax.swing.JTextField spp_cuspp;
     // End of variables declaration//GEN-END:variables
 }

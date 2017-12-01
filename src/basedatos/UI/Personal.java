@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ButtonGroup;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 import javax.swing.table.DefaultTableModel;
@@ -111,24 +112,22 @@ public class Personal extends javax.swing.JFrame {
         jButton6 = new javax.swing.JButton();
         jButton7 = new javax.swing.JButton();
         jButton8 = new javax.swing.JButton();
-        jTextField14 = new javax.swing.JTextField();
         jButton9 = new javax.swing.JButton();
         jLabel16 = new javax.swing.JLabel();
         jTextField15 = new javax.swing.JTextField();
         jLabel29 = new javax.swing.JLabel();
-        jTextField16 = new javax.swing.JTextField();
         jButton10 = new javax.swing.JButton();
         jLabel35 = new javax.swing.JLabel();
         jButton11 = new javax.swing.JButton();
         jButton14 = new javax.swing.JButton();
         comboBox_tipoDocumento = new javax.swing.JComboBox<>();
         jButton16 = new javax.swing.JButton();
-        Si = new javax.swing.JRadioButton();
-        jRadioButton2 = new javax.swing.JRadioButton();
-        jRadioButton3 = new javax.swing.JRadioButton();
-        jRadioButton4 = new javax.swing.JRadioButton();
-        jRadioButton5 = new javax.swing.JRadioButton();
-        jRadioButton6 = new javax.swing.JRadioButton();
+        DescapacidadSi = new javax.swing.JRadioButton();
+        DescapacidadNo = new javax.swing.JRadioButton();
+        SindicalizadoSi = new javax.swing.JRadioButton();
+        SindicalizadoNo = new javax.swing.JRadioButton();
+        ControlInmediatoSi = new javax.swing.JRadioButton();
+        ControlInmediatoNo = new javax.swing.JRadioButton();
         jButton12 = new javax.swing.JButton();
         jButton13 = new javax.swing.JButton();
         jButton15 = new javax.swing.JButton();
@@ -139,8 +138,10 @@ public class Personal extends javax.swing.JFrame {
         jButton21 = new javax.swing.JButton();
         comboBox_ubigeo = new javax.swing.JComboBox<>();
         jButton22 = new javax.swing.JButton();
-        jRadioButton1 = new javax.swing.JRadioButton();
-        jRadioButton7 = new javax.swing.JRadioButton();
+        SeguroSi = new javax.swing.JRadioButton();
+        SeguroNo = new javax.swing.JRadioButton();
+        jComboBox1 = new javax.swing.JComboBox<>();
+        jComboBox2 = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -268,8 +269,6 @@ public class Personal extends javax.swing.JFrame {
 
         jButton8.setText("Salir");
 
-        jTextField14.setEnabled(false);
-
         jButton9.setText("Regimen Pensionario");
         jButton9.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -280,8 +279,6 @@ public class Personal extends javax.swing.JFrame {
         jLabel16.setText("Codigo");
 
         jLabel29.setText("Contrato trabajor");
-
-        jTextField16.setEnabled(false);
 
         jButton10.setText("Contrato Trabajador");
         jButton10.addActionListener(new java.awt.event.ActionListener() {
@@ -315,20 +312,20 @@ public class Personal extends javax.swing.JFrame {
             }
         });
 
-        Si.setText("Si");
+        DescapacidadSi.setText("Si");
 
-        jRadioButton2.setSelected(true);
-        jRadioButton2.setText("No");
+        DescapacidadNo.setSelected(true);
+        DescapacidadNo.setText("No");
 
-        jRadioButton3.setText("Si");
+        SindicalizadoSi.setText("Si");
 
-        jRadioButton4.setSelected(true);
-        jRadioButton4.setText("No");
+        SindicalizadoNo.setSelected(true);
+        SindicalizadoNo.setText("No");
 
-        jRadioButton5.setText("Si");
+        ControlInmediatoSi.setText("Si");
 
-        jRadioButton6.setSelected(true);
-        jRadioButton6.setText("No");
+        ControlInmediatoNo.setSelected(true);
+        ControlInmediatoNo.setText("No");
 
         jButton12.setText("Modificar");
         jButton12.addActionListener(new java.awt.event.ActionListener() {
@@ -391,10 +388,14 @@ public class Personal extends javax.swing.JFrame {
             }
         });
 
-        jRadioButton1.setText("Si");
+        SeguroSi.setText("Si");
 
-        jRadioButton7.setSelected(true);
-        jRadioButton7.setText("No");
+        SeguroNo.setSelected(true);
+        SeguroNo.setText("No");
+
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -455,19 +456,19 @@ public class Personal extends javax.swing.JFrame {
                                 .addGap(46, 46, 46)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jTextField14, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(layout.createSequentialGroup()
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addComponent(jRadioButton3)
-                                            .addComponent(Si)
-                                            .addComponent(jRadioButton5))
+                                            .addComponent(SindicalizadoSi)
+                                            .addComponent(DescapacidadSi)
+                                            .addComponent(ControlInmediatoSi))
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jRadioButton2)
-                                            .addComponent(jRadioButton4)
-                                            .addComponent(jRadioButton6)))))
+                                            .addComponent(DescapacidadNo)
+                                            .addComponent(SindicalizadoNo)
+                                            .addComponent(ControlInmediatoNo)))))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel12)
@@ -504,7 +505,7 @@ public class Personal extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel29)
                                 .addGap(18, 18, 18)
-                                .addComponent(jTextField16, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jButton10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addGroup(layout.createSequentialGroup()
@@ -551,9 +552,9 @@ public class Personal extends javax.swing.JFrame {
                                             .addComponent(jButton18, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                             .addComponent(jButton19, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jRadioButton1)
+                                        .addComponent(SeguroSi)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(jRadioButton7)
+                                        .addComponent(SeguroNo)
                                         .addGap(0, 0, Short.MAX_VALUE))))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -591,8 +592,8 @@ public class Personal extends javax.swing.JFrame {
                             .addComponent(jLabel16)
                             .addComponent(jTextField15, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel29)
-                            .addComponent(jTextField16, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton10))
+                            .addComponent(jButton10)
+                            .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel6)
@@ -655,23 +656,23 @@ public class Personal extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(jLabel23)
-                                    .addComponent(jTextField14, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jButton9))
+                                    .addComponent(jButton9)
+                                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(13, 13, 13)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(jLabel27)
-                                    .addComponent(Si)
-                                    .addComponent(jRadioButton2))
+                                    .addComponent(DescapacidadSi)
+                                    .addComponent(DescapacidadNo))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(jLabel31)
-                                    .addComponent(jRadioButton3)
-                                    .addComponent(jRadioButton4))
+                                    .addComponent(SindicalizadoSi)
+                                    .addComponent(SindicalizadoNo))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(jLabel33)
-                                    .addComponent(jRadioButton5)
-                                    .addComponent(jRadioButton6)))
+                                    .addComponent(ControlInmediatoSi)
+                                    .addComponent(ControlInmediatoNo)))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(jLabel20)
@@ -733,8 +734,8 @@ public class Personal extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(jLabel30)
-                                    .addComponent(jRadioButton1)
-                                    .addComponent(jRadioButton7))
+                                    .addComponent(SeguroSi)
+                                    .addComponent(SeguroNo))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(jLabel35)
@@ -778,8 +779,29 @@ public class Personal extends javax.swing.JFrame {
     private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
         RegimenPensionario regimenPensionario = new RegimenPensionario();
         regimenPensionario.setTitle("Regimen Pensionario");
-        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-                regimenPensionario.setLocation(dim.width/2-regimenPensionario.getSize().width/2, dim.height/2-regimenPensionario.getSize().height/2);
+        try {
+            String sql = "SELECT * FROM regimen_pensionario";
+            Statement s = Conexion.obtener().createStatement();
+            ResultSet rs = s.executeQuery(sql);
+            DefaultTableModel model = new DefaultTableModel(new String[]{"Codigo", "SPP CUS","ANO", "MES", "DIA", "Estado", "Tipo"}, 0);
+            while(rs.next())
+            {
+                String d = rs.getString("RegPenCod");
+                String e = rs.getString("RegPenSppCus");
+                String f = rs.getString("RegPenFecInsAnio");
+                String g = rs.getString("RegPenFecInsMes");
+                String h = rs.getString("RegPenFecInsDia");
+                String i = rs.getString("RegPenEstReg");
+                String j = rs.getString("TIPO_REGIMEN_PENSIONARIO_TipRegPenCod");
+                model.addRow(new Object[]{d, e, f, g, h, i, j});
+            }
+            regimenPensionario.getJTable().setModel(model);
+        } catch (SQLException ex) {
+            Logger.getLogger(NivelEducativo.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(NivelEducativo.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        regimenPensionario.comboBox_TipoRegimen();
         regimenPensionario.setVisible(true);
     }//GEN-LAST:event_jButton9ActionPerformed
 
@@ -1280,6 +1302,23 @@ public class Personal extends javax.swing.JFrame {
         } catch (ClassNotFoundException ex) {
         Logger.getLogger(TipoDocumento.class.getName()).log(Level.SEVERE, null, ex);
         }
+        ButtonGroup grupoDescapacidad = new ButtonGroup();
+        grupoDescapacidad.add(personal.DescapacidadSi);
+        grupoDescapacidad.add(personal.DescapacidadNo);
+       
+        ButtonGroup sindicalizado = new ButtonGroup();
+        sindicalizado.add(personal.SindicalizadoSi);
+        sindicalizado.add(personal.SindicalizadoNo);
+        
+        ButtonGroup controlInmediato = new ButtonGroup();
+        controlInmediato.add(personal.ControlInmediatoSi);
+        controlInmediato.add(personal.ControlInmediatoNo);
+        
+        ButtonGroup seguro = new ButtonGroup();
+        seguro.add(personal.SeguroSi);
+        seguro.add(personal.SeguroNo);
+        
+        
         personal.comboBox_tipoDocumento();
         personal.comboBox_ocupacion();
         personal.comboBox_ubigeo();
@@ -1294,7 +1333,14 @@ public class Personal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JRadioButton Si;
+    private javax.swing.JRadioButton ControlInmediatoNo;
+    private javax.swing.JRadioButton ControlInmediatoSi;
+    private javax.swing.JRadioButton DescapacidadNo;
+    private javax.swing.JRadioButton DescapacidadSi;
+    private javax.swing.JRadioButton SeguroNo;
+    private javax.swing.JRadioButton SeguroSi;
+    private javax.swing.JRadioButton SindicalizadoNo;
+    private javax.swing.JRadioButton SindicalizadoSi;
     private javax.swing.JComboBox<String> comboBox_EstadoCivil;
     private javax.swing.JComboBox<String> comboBox_GrupoSanguineo;
     private javax.swing.JComboBox<String> comboBox_Sexo;
@@ -1326,6 +1372,8 @@ public class Personal extends javax.swing.JFrame {
     private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
     private javax.swing.JButton jButton9;
+    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JComboBox<String> jComboBox20;
     private javax.swing.JComboBox<String> jComboBox7;
     private javax.swing.JLabel jLabel1;
@@ -1362,13 +1410,6 @@ public class Personal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JRadioButton jRadioButton2;
-    private javax.swing.JRadioButton jRadioButton3;
-    private javax.swing.JRadioButton jRadioButton4;
-    private javax.swing.JRadioButton jRadioButton5;
-    private javax.swing.JRadioButton jRadioButton6;
-    private javax.swing.JRadioButton jRadioButton7;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSpinner jSpinner1;
@@ -1381,9 +1422,7 @@ public class Personal extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField11;
     private javax.swing.JTextField jTextField12;
     private javax.swing.JTextField jTextField13;
-    private javax.swing.JTextField jTextField14;
     private javax.swing.JTextField jTextField15;
-    private javax.swing.JTextField jTextField16;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField4;

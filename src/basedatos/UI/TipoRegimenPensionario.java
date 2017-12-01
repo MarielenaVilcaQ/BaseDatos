@@ -4,13 +4,16 @@
  * and open the template in the editor.
  */
 package basedatos.UI;
+import basedatos.Clases.AFP;
 import basedatos.Conexion;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JTable;
 //import javax.swing.JFrame;
 import javax.swing.table.DefaultTableModel;
 /**
@@ -19,6 +22,7 @@ import javax.swing.table.DefaultTableModel;
  */
 public class TipoRegimenPensionario extends javax.swing.JFrame {
     char flag = '_';
+    ArrayList<AFP> afp;
     /**
      * Creates new form TipoRegimenPensionario
      */
@@ -52,9 +56,11 @@ public class TipoRegimenPensionario extends javax.swing.JFrame {
         modificar = new javax.swing.JButton();
         descripcion = new javax.swing.JTextField();
         inactivar = new javax.swing.JButton();
-        codigoafp = new javax.swing.JComboBox<>();
+        comboBox_AFP = new javax.swing.JComboBox<>();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel2.setText("Codigo AFP:");
 
@@ -168,7 +174,21 @@ public class TipoRegimenPensionario extends javax.swing.JFrame {
             }
         });
 
-        codigoafp.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        comboBox_AFP.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        jButton1.setText("Modificar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        jButton2.setText("Actualizar Grilla");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -181,21 +201,23 @@ public class TipoRegimenPensionario extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(inactivar, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
                             .addComponent(adicionar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(48, 48, 48)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(modificar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(reactivar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(51, 51, 51)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(actualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(eliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 77, Short.MAX_VALUE)
+                            .addComponent(actualizar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(eliminar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(salir, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(cancelar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel3)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -204,14 +226,16 @@ public class TipoRegimenPensionario extends javax.swing.JFrame {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel2)
                                     .addComponent(jLabel1))
-                                .addGap(32, 32, 32)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(codigo, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
-                                    .addComponent(codigoafp, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(36, 36, 36)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(comboBox_AFP, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(codigo))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel4)
-                        .addGap(26, 26, 26)
-                        .addComponent(descripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(descripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(24, 24, 24))
         );
         layout.setVerticalGroup(
@@ -226,7 +250,8 @@ public class TipoRegimenPensionario extends javax.swing.JFrame {
                     .addComponent(jLabel2)
                     .addComponent(jLabel4)
                     .addComponent(descripcion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(codigoafp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(comboBox_AFP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton1))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
@@ -234,17 +259,20 @@ public class TipoRegimenPensionario extends javax.swing.JFrame {
                 .addGap(21, 21, 21)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(adicionar)
-                    .addComponent(modificar)
-                    .addComponent(eliminar)
-                    .addComponent(cancelar))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(inactivar)
-                    .addComponent(reactivar)
-                    .addComponent(actualizar)
-                    .addComponent(salir))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(adicionar)
+                            .addComponent(modificar)
+                            .addComponent(eliminar)
+                            .addComponent(cancelar))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(inactivar)
+                            .addComponent(reactivar)
+                            .addComponent(actualizar)
+                            .addComponent(salir)))
+                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -298,13 +326,13 @@ public class TipoRegimenPensionario extends javax.swing.JFrame {
             case 'm':
             try {
                 Statement s = Conexion.obtener().createStatement();
-                PreparedStatement ps = Conexion.obtener().prepareStatement("UPDATE `tipo_regimen_pensionario`"
-                    + "SET `afp_AfpCod` = '"+ codigoafp.getText() +"', `TipRegPenDes` = '"
-                    + descripcion.getText()+"', `TipRegPenEstReg` = '"+ estado.getText() +"'"
-                    + "WHERE `tipo_regimen_pensionario`.`TipRegPenCod` = '"+ codigo.getText() +"'; ");
-                ps.execute();
-                ps = Conexion.obtener().prepareStatement("COMMIT;");
-                ps.execute();
+                //PreparedStatement ps = Conexion.obtener().prepareStatement("UPDATE `tipo_regimen_pensionario`"
+                //    + "SET `afp_AfpCod` = '"+ codigoafp.getText() +"', `TipRegPenDes` = '"
+                //    + descripcion.getText()+"', `TipRegPenEstReg` = '"+ estado.getText() +"'"
+                //    + "WHERE `tipo_regimen_pensionario`.`TipRegPenCod` = '"+ codigo.getText() +"'; ");
+                //ps.execute();
+                //ps = Conexion.obtener().prepareStatement("COMMIT;");
+                //ps.execute();
             } catch (SQLException ex) {
                 Logger.getLogger(TipoTrabajador.class.getName()).log(Level.SEVERE, null, ex);
             } catch (ClassNotFoundException ex) {
@@ -358,10 +386,16 @@ public class TipoRegimenPensionario extends javax.swing.JFrame {
             break;
             case 'a':
             try {
+                //Buscar codigo
+                String seleccionado = "00";
+                for (AFP afp : afp) {
+                    if (afp.getAfpDes().equals(comboBox_AFP.getSelectedItem().toString()))
+                        seleccionado = afp.getAfpCod();
+                }
                 Statement s = Conexion.obtener().createStatement();
                 PreparedStatement ps = Conexion.obtener().prepareStatement("INSERT INTO `tipo_regimen_pensionario`"
                     + "(`TipRegPenCod`, `afp_AfpCod`, `TipRegPenDes`, `TipRegPenEstReg`)"
-                    + "VALUES ('"+ codigo.getText() +"', '"+ codigoafp.getText()
+                    + "VALUES ('"+ codigo.getText() +"', '"+ seleccionado
                     +"','"+ descripcion.getText() +"', '"+ estado.getText() +"');");
                 ps.execute();
                 ps = Conexion.obtener().prepareStatement("COMMIT;");
@@ -406,7 +440,7 @@ public class TipoRegimenPensionario extends javax.swing.JFrame {
     }//GEN-LAST:event_codigoActionPerformed
 
     private void salirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salirActionPerformed
-        System.exit(0);
+        this.dispose();
     }//GEN-LAST:event_salirActionPerformed
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
@@ -420,11 +454,9 @@ public class TipoRegimenPensionario extends javax.swing.JFrame {
     private void adicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adicionarActionPerformed
         flag = 'a';
         codigo.setText("");
-
         descripcion.setText("");
         estado.setText("A");
         codigo.setEditable(true);
-
         descripcion.setEditable(true);
     }//GEN-LAST:event_adicionarActionPerformed
 
@@ -455,6 +487,62 @@ public class TipoRegimenPensionario extends javax.swing.JFrame {
         estado.setEditable(false);
     }//GEN-LAST:event_inactivarActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        Afp afp = new Afp();
+        afp.setTitle("AFP");
+        try {
+        String sql = "SELECT * FROM afp";
+        Statement s = Conexion.obtener().createStatement();
+        ResultSet rs = s.executeQuery(sql);
+        DefaultTableModel model = new DefaultTableModel(new String[]{"Codigo", "Descripcion", "Estado de registro"}, 0);
+        while(rs.next())
+        {
+            String d = rs.getString("AfpCod");
+            String e = rs.getString("AfpDes");
+            String f = rs.getString("AfpEstReg");
+            model.addRow(new Object[]{d, e, f });
+        }
+        afp.getJTable().setModel(model);
+        } catch (SQLException ex) {
+        Logger.getLogger(TipoTrabajador.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+        Logger.getLogger(TipoTrabajador.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        afp.setVisible(true);
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        comboBox_afp();
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    public void comboBox_afp() {
+        try {
+            afp = new ArrayList<AFP>();
+            String sql = "SELECT * FROM afp";
+            Statement s = Conexion.obtener().createStatement();
+            ResultSet rs = s.executeQuery(sql);
+            while(rs.next())
+            {
+                if (rs.getString("AfpEstReg").equals("A")) {
+                    afp.add(new AFP (rs.getString("AfpCod"), rs.getString("AfpDes"), rs.getString("AfpEstReg")));
+                }
+            }
+            String [] arrPais = new String [afp.size()];
+            for (int i = 0; i < arrPais.length; i++) {
+                arrPais[i] = afp.get(i).getAfpDes();
+            }
+            comboBox_AFP.setModel(new javax.swing.DefaultComboBoxModel(arrPais));;
+        } catch (SQLException ex) {
+        Logger.getLogger(TipoDocumento.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+        Logger.getLogger(TipoDocumento.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public JTable getJTable () {
+        return jTable1;
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -488,14 +576,15 @@ public class TipoRegimenPensionario extends javax.swing.JFrame {
                 TipoRegimenPensionario trp = new TipoRegimenPensionario();
                 trp.setTitle("Tipo regimen pensionario");
                 try {
-                String sql = "SELECT * FROM tipo_regimen_pensionario";
+                String sql = "SELECT TipRegPenCod, AfpDes, TipRegPenDes, TipRegPenEstReg "
+                    + "FROM tipo_regimen_pensionario, afp WHERE tipo_regimen_pensionario.afp_AfpCod = afp.AfpCod";
                 Statement s = Conexion.obtener().createStatement();
                 ResultSet rs = s.executeQuery(sql);
-                DefaultTableModel model = new DefaultTableModel(new String[]{"Codigo", "Codigo AFP","Descripcion", "Estado de registro"}, 0);
+                DefaultTableModel model = new DefaultTableModel(new String[]{"Codigo", "AFP","Descripcion", "Estado de registro"}, 0);
                 while(rs.next())
                 {
                     String d = rs.getString("TipRegPenCod");
-                    String e = rs.getString("afp_AfpCod");
+                    String e = rs.getString("AfpDes");
                     String f = rs.getString("TipRegPenDes");
                     String g = rs.getString("TipRegPenEstReg");;
                     model.addRow(new Object[]{d, e, f, g});
@@ -506,6 +595,7 @@ public class TipoRegimenPensionario extends javax.swing.JFrame {
                 } catch (ClassNotFoundException ex) {
                 Logger.getLogger(NivelEducativo.class.getName()).log(Level.SEVERE, null, ex);
                 }
+                trp.comboBox_afp();
                 trp.setVisible(true);
             }
         });
@@ -516,11 +606,13 @@ public class TipoRegimenPensionario extends javax.swing.JFrame {
     private javax.swing.JButton adicionar;
     private javax.swing.JButton cancelar;
     private javax.swing.JTextField codigo;
-    private javax.swing.JComboBox<String> codigoafp;
+    private javax.swing.JComboBox<String> comboBox_AFP;
     private javax.swing.JTextField descripcion;
     private javax.swing.JButton eliminar;
     private javax.swing.JTextField estado;
     private javax.swing.JButton inactivar;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
