@@ -11,6 +11,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JTable;
 //import javax.swing.JFrame;
 import javax.swing.table.DefaultTableModel;
 /**
@@ -244,7 +245,7 @@ public class Ocupacion extends javax.swing.JFrame {
     }//GEN-LAST:event_cancelarActionPerformed
 
     private void salirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salirActionPerformed
-        System.exit(0);
+        this.dispose();
     }//GEN-LAST:event_salirActionPerformed
 
     private void inactivarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inactivarActionPerformed
@@ -426,6 +427,10 @@ public class Ocupacion extends javax.swing.JFrame {
         estado.setEditable(false);
     }//GEN-LAST:event_eliminarActionPerformed
 
+    public JTable getJTable () {
+        return jTable1;
+    }
+    
     /**
      * @param args the command line arguments
      */
