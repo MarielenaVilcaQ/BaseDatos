@@ -457,7 +457,7 @@ public class GrupoSanguineo extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 GrupoSanguineo grupoSanguineo = new GrupoSanguineo();
-                grupoSanguineo.setTitle("Tipo de Trabajador");
+                grupoSanguineo.setTitle("Grupo Sanguineo");
                 try {
                 String sql = "SELECT * FROM grupo_sanguineo";
                 Statement s = Conexion.obtener().createStatement();
