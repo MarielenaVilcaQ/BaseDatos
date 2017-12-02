@@ -6,6 +6,9 @@
 package basedatos.UI;
 
 import basedatos.Conexion;
+import java.awt.Color;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -26,6 +29,19 @@ public class TipoTrabajador extends javax.swing.JFrame {
      */
     public TipoTrabajador() {
         initComponents();
+        //LIMITE
+        codigo.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                if (codigo.getText().length() == 0) {
+                    codigo.setBackground(Color.white);
+                } else if (codigo.getText().length() >= 1 ) { // limit to 6 characters
+                    e.consume();
+                } else {
+                    codigo.setBackground(new Color(255, 185, 185));
+                }
+            }
+        });
     }
     /**
      * This method is called from within the constructor to initialize the form.

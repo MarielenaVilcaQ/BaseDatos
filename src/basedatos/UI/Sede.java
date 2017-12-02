@@ -4,11 +4,18 @@
  * and open the template in the editor.
  */
 package basedatos.UI;
+import basedatos.Clases.AFPClass;
+import basedatos.Clases.EstadoRegistroClass;
+import basedatos.Clases.TipoRegimenClass;
 import basedatos.Conexion;
+import java.awt.Color;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JTable;
@@ -20,11 +27,25 @@ import javax.swing.table.DefaultTableModel;
  */
 public class Sede extends javax.swing.JFrame {
     char flag = '_';
+    ArrayList<EstadoRegistroClass> estadoRegistro;
     /**
      * Creates new form Sede
      */
     public Sede() {
         initComponents();
+        //LIMITE
+        codigo.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                if (codigo.getText().length() == 1) {
+                    codigo.setBackground(Color.white);
+                } else if (codigo.getText().length() >= 2 ) { // limit to 6 characters
+                    e.consume();
+                } else {
+                    codigo.setBackground(new Color(255, 185, 185));
+                }
+            }
+        });
     }
 
     /**
@@ -42,7 +63,6 @@ public class Sede extends javax.swing.JFrame {
         reactivar = new javax.swing.JButton();
         actualizar = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
-        estado = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
@@ -52,6 +72,8 @@ public class Sede extends javax.swing.JFrame {
         adicionar = new javax.swing.JButton();
         modificar = new javax.swing.JButton();
         eliminar = new javax.swing.JButton();
+        comboBox_EstadoRegistro = new javax.swing.JComboBox<>();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -91,12 +113,6 @@ public class Sede extends javax.swing.JFrame {
         });
 
         jLabel3.setText("Estado de registro:");
-
-        estado.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                estadoActionPerformed(evt);
-            }
-        });
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -159,6 +175,15 @@ public class Sede extends javax.swing.JFrame {
             }
         });
 
+        comboBox_EstadoRegistro.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Null" }));
+        comboBox_EstadoRegistro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboBox_EstadoRegistroActionPerformed(evt);
+            }
+        });
+
+        jButton1.setText("Modificar");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -168,39 +193,38 @@ public class Sede extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel3)
-                        .addGap(18, 18, 18)
-                        .addComponent(estado, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(comboBox_EstadoRegistro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton1))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel2)
-                                    .addComponent(jLabel1))
-                                .addGap(52, 52, 52)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(codigo, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(0, 0, Short.MAX_VALUE))
-                                    .addComponent(descripcion)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel1))
+                        .addGap(52, 52, 52)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(inactivar, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
-                                    .addComponent(adicionar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addGap(48, 48, 48)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(modificar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(reactivar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(51, 51, 51)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(actualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(eliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(cancelar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(salir, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addComponent(jScrollPane1))
-                        .addGap(25, 25, 25))))
+                                .addComponent(codigo, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(descripcion)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(inactivar, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
+                            .addComponent(adicionar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(48, 48, 48)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(modificar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(reactivar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(51, 51, 51)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(actualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(eliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(cancelar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(salir, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addGap(25, 25, 25))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -216,8 +240,9 @@ public class Sede extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(estado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(9, 9, 9)
+                    .addComponent(comboBox_EstadoRegistro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton1))
+                .addGap(7, 7, 7)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -241,7 +266,7 @@ public class Sede extends javax.swing.JFrame {
         flag = 'c';
         codigo.setText("");
         descripcion.setText("");
-        estado.setText("");
+        //estado.setText("");
     }//GEN-LAST:event_cancelarActionPerformed
 
     private void salirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salirActionPerformed
@@ -255,8 +280,8 @@ public class Sede extends javax.swing.JFrame {
         codigo.setEditable(false);
         descripcion.setText(jTable1.getValueAt(row, 1) + "");
         descripcion.setEditable(false);
-        estado.setText(jTable1.getValueAt(row, 2) + "");
-        estado.setEditable(false);
+        //estado.setText(jTable1.getValueAt(row, 2) + "");
+        //estado.setEditable(false);
     }//GEN-LAST:event_inactivarActionPerformed
 
     private void reactivarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reactivarActionPerformed
@@ -266,8 +291,8 @@ public class Sede extends javax.swing.JFrame {
         codigo.setEditable(false);
         descripcion.setText(jTable1.getValueAt(row, 1) + "");
         descripcion.setEditable(false);
-        estado.setText(jTable1.getValueAt(row, 2) + "");
-        estado.setEditable(false);
+        //estado.setText(jTable1.getValueAt(row, 2) + "");
+        //estado.setEditable(false);
     }//GEN-LAST:event_reactivarActionPerformed
 
     private void actualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_actualizarActionPerformed
@@ -285,12 +310,12 @@ public class Sede extends javax.swing.JFrame {
             case 'm':
             try {
                 Statement s = Conexion.obtener().createStatement();
-                PreparedStatement ps = Conexion.obtener().prepareStatement("UPDATE `sede`"
-                    + "SET `SedDes` = '"+ descripcion.getText() +"', `EstReg` = '"+ estado.getText() +"'"
-                    + "WHERE `sede`.`SedCod` = '"+ codigo.getText() +"'; ");
-                ps.execute();
-                ps = Conexion.obtener().prepareStatement("COMMIT;");
-                ps.execute();
+                //PreparedStatement ps = Conexion.obtener().prepareStatement("UPDATE `sede`"
+                //    + "SET `SedDes` = '"+ descripcion.getText() +"', `EstReg` = '"+ estado.getText() +"'"
+                //    + "WHERE `sede`.`SedCod` = '"+ codigo.getText() +"'; ");
+                //ps.execute();
+                //ps = Conexion.obtener().prepareStatement("COMMIT;");
+                //ps.execute();
             } catch (SQLException ex) {
                 Logger.getLogger(TipoTrabajador.class.getName()).log(Level.SEVERE, null, ex);
             } catch (ClassNotFoundException ex) {
@@ -344,10 +369,14 @@ public class Sede extends javax.swing.JFrame {
             break;
             case 'a':
             try {
+                String seleccionado = "0";
+                for (EstadoRegistroClass estadoRegistro : estadoRegistro) {
+                    if (estadoRegistro.getEstRegDes().equals(comboBox_EstadoRegistro.getSelectedItem().toString()))
+                        seleccionado = estadoRegistro.getEstRegCod();
+                }
                 Statement s = Conexion.obtener().createStatement();
-                PreparedStatement ps = Conexion.obtener().prepareStatement("INSERT INTO `sede`"
-                    + "(`SedCod`, `SedDes`, `EstReg`)"
-                    + "VALUES ('"+ codigo.getText() +"', '"+ descripcion.getText() +"', '"+ estado.getText() +"');");
+                PreparedStatement ps = Conexion.obtener().prepareStatement("INSERT INTO `sede` (`SedCod`, `SedDes`, `EstReg`) "
+                        + "VALUES ('"+ codigo.getText() +"', '"+ descripcion.getText() +"', '"+ seleccionado +"');");
                 ps.execute();
                 ps = Conexion.obtener().prepareStatement("COMMIT;");
                 ps.execute();
@@ -374,7 +403,7 @@ public class Sede extends javax.swing.JFrame {
             jTable1.setModel(model);
             codigo.setText("");
             descripcion.setText("");
-            estado.setText("");
+            //estado.setText("");
         } catch (SQLException ex) {
             Logger.getLogger(TipoTrabajador.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
@@ -384,10 +413,6 @@ public class Sede extends javax.swing.JFrame {
         flag = '_';
 
     }//GEN-LAST:event_actualizarActionPerformed
-
-    private void estadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_estadoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_estadoActionPerformed
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
 
@@ -401,7 +426,7 @@ public class Sede extends javax.swing.JFrame {
         flag = 'a';
         codigo.setText("");
         descripcion.setText("");
-        estado.setText("A");
+        comboBox_EstadoRegistro.setSelectedIndex(0);
         codigo.setEditable(true);
         descripcion.setEditable(true);
     }//GEN-LAST:event_adicionarActionPerformed
@@ -412,8 +437,16 @@ public class Sede extends javax.swing.JFrame {
         codigo.setText(jTable1.getValueAt(row, 0) + "");
         codigo.setEditable(false);
         descripcion.setText(jTable1.getValueAt(row, 1) + "");
-        estado.setText(jTable1.getValueAt(row, 2) + "");
-        estado.setEditable(false);
+        switch (jTable1.getValueAt(row, 2) + "") {
+            case "A": comboBox_EstadoRegistro.setSelectedIndex(0);
+            break;
+            case "I": comboBox_EstadoRegistro.setSelectedIndex(1);
+            break;
+            case "*": comboBox_EstadoRegistro.setSelectedIndex(2);
+            break;
+            default : System.err.println("Error");
+        }
+        //estado.setEditable(false);
     }//GEN-LAST:event_modificarActionPerformed
 
     private void eliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminarActionPerformed
@@ -423,10 +456,39 @@ public class Sede extends javax.swing.JFrame {
         codigo.setEditable(false);
         descripcion.setText(jTable1.getValueAt(row, 1) + "");
         descripcion.setEditable(false);
-        estado.setText(jTable1.getValueAt(row, 2) + "");
-        estado.setEditable(false);
+        //estado.setText(jTable1.getValueAt(row, 2) + "");
+        //estado.setEditable(false);
     }//GEN-LAST:event_eliminarActionPerformed
 
+    private void comboBox_EstadoRegistroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboBox_EstadoRegistroActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_comboBox_EstadoRegistroActionPerformed
+
+    public void comboBox_EstadoRegistro() {
+        try {
+            estadoRegistro = new ArrayList<EstadoRegistroClass>();
+            String sql = "SELECT * FROM estado_registro";
+            Statement s = Conexion.obtener().createStatement();
+            ResultSet rs = s.executeQuery(sql);
+            while(rs.next())
+            {
+                if (rs.getString("EstReg").equals("A")) {
+                    estadoRegistro.add(new EstadoRegistroClass (rs.getString("EstRegCod"), rs.getString("EstRegDes"),
+                            rs.getString("EstReg")));
+                }
+            }
+            String [] arrEstadoRegistro = new String [estadoRegistro.size()];
+            for (int i = 0; i < arrEstadoRegistro.length; i++) {
+                arrEstadoRegistro[i] = estadoRegistro.get(i).getEstRegDes();
+            }
+            comboBox_EstadoRegistro.setModel(new javax.swing.DefaultComboBoxModel(arrEstadoRegistro));;
+        } catch (SQLException ex) {
+        Logger.getLogger(TipoDocumento.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+        Logger.getLogger(TipoDocumento.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
     public JTable getJTable () {
         return jTable1;
     }
@@ -481,6 +543,7 @@ public class Sede extends javax.swing.JFrame {
                 } catch (ClassNotFoundException ex) {
                 Logger.getLogger(TipoTrabajador.class.getName()).log(Level.SEVERE, null, ex);
                 }
+                sede.comboBox_EstadoRegistro();
                 sede.setVisible(true);
             }
         });
@@ -491,10 +554,11 @@ public class Sede extends javax.swing.JFrame {
     private javax.swing.JButton adicionar;
     private javax.swing.JButton cancelar;
     private javax.swing.JTextField codigo;
+    private javax.swing.JComboBox<String> comboBox_EstadoRegistro;
     private javax.swing.JTextField descripcion;
     private javax.swing.JButton eliminar;
-    private javax.swing.JTextField estado;
     private javax.swing.JButton inactivar;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
