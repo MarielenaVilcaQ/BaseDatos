@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 package basedatos.UI;
-import basedatos.Clases.AFP;
+import basedatos.Clases.AFPClass;
 import basedatos.Conexion;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -22,7 +22,7 @@ import javax.swing.table.DefaultTableModel;
  */
 public class TipoRegimenPensionario extends javax.swing.JFrame {
     char flag = '_';
-    ArrayList<AFP> afp;
+    ArrayList<AFPClass> afp;
     /**
      * Creates new form TipoRegimenPensionario
      */
@@ -388,7 +388,7 @@ public class TipoRegimenPensionario extends javax.swing.JFrame {
             try {
                 //Buscar codigo
                 String seleccionado = "00";
-                for (AFP afp : afp) {
+                for (AFPClass afp : afp) {
                     if (afp.getAfpDes().equals(comboBox_AFP.getSelectedItem().toString()))
                         seleccionado = afp.getAfpCod();
                 }
@@ -517,14 +517,14 @@ public class TipoRegimenPensionario extends javax.swing.JFrame {
 
     public void comboBox_afp() {
         try {
-            afp = new ArrayList<AFP>();
+            afp = new ArrayList<AFPClass>();
             String sql = "SELECT * FROM afp";
             Statement s = Conexion.obtener().createStatement();
             ResultSet rs = s.executeQuery(sql);
             while(rs.next())
             {
                 if (rs.getString("AfpEstReg").equals("A")) {
-                    afp.add(new AFP (rs.getString("AfpCod"), rs.getString("AfpDes"), rs.getString("AfpEstReg")));
+                    afp.add(new AFPClass (rs.getString("AfpCod"), rs.getString("AfpDes"), rs.getString("AfpEstReg")));
                 }
             }
             String [] arrPais = new String [afp.size()];

@@ -12,6 +12,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JTable;
 //import javax.swing.JFrame;
 import javax.swing.table.DefaultTableModel;
 
@@ -52,7 +53,7 @@ public class TipoTrabajador extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         estado = new javax.swing.JTextField();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -427,13 +428,17 @@ public class TipoTrabajador extends javax.swing.JFrame {
     }//GEN-LAST:event_cancelarActionPerformed
 
     private void salirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salirActionPerformed
-        System.exit(0);
+        this.dispose();
     }//GEN-LAST:event_salirActionPerformed
 
     private void estadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_estadoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_estadoActionPerformed
 
+    public JTable getJTable () {
+        return jTable1;
+    }
+    
     /**
      * @param args the command line arguments
      */

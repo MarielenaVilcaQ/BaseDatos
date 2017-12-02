@@ -5,8 +5,8 @@
  */
 package basedatos.UI;
 
-import basedatos.Clases.AFP;
-import basedatos.Clases.TipoRegimen;
+import basedatos.Clases.AFPClass;
+import basedatos.Clases.TipoRegimenClass;
 import basedatos.Conexion;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -25,7 +25,7 @@ import javax.swing.table.DefaultTableModel;
 public class RegimenPensionario extends javax.swing.JFrame {
     
     char flag = '_';
-     ArrayList<TipoRegimen> tipoRegimen;
+     ArrayList<TipoRegimenClass> tipoRegimen;
 
     /**
      * Creates new form RegimenPensionario
@@ -141,6 +141,11 @@ public class RegimenPensionario extends javax.swing.JFrame {
         jButton9.setText("Salir");
 
         comboBox_TipoRegimen.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        comboBox_TipoRegimen.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboBox_TipoRegimenActionPerformed(evt);
+            }
+        });
 
         jButton10.setText("Actualizar Grillas");
         jButton10.addActionListener(new java.awt.event.ActionListener() {
@@ -381,7 +386,7 @@ public class RegimenPensionario extends javax.swing.JFrame {
             try {
                 //Buscar codigo
                 String seleccionado = "00";
-                for (TipoRegimen tipoRegimen : tipoRegimen) {
+                for (TipoRegimenClass tipoRegimen : tipoRegimen) {
                     if (tipoRegimen.getTipRegPenDes().equals(comboBox_TipoRegimen.getSelectedItem().toString()))
                         seleccionado = tipoRegimen.getTipRegPenCod();
                 }
@@ -432,16 +437,20 @@ public class RegimenPensionario extends javax.swing.JFrame {
         flag = '_';
     }//GEN-LAST:event_jButton8ActionPerformed
 
+    private void comboBox_TipoRegimenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboBox_TipoRegimenActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_comboBox_TipoRegimenActionPerformed
+
     public void comboBox_TipoRegimen() {
         try {
-            tipoRegimen = new ArrayList<TipoRegimen>();
+            tipoRegimen = new ArrayList<TipoRegimenClass>();
             String sql = "SELECT * FROM tipo_regimen_pensionario";
             Statement s = Conexion.obtener().createStatement();
             ResultSet rs = s.executeQuery(sql);
             while(rs.next())
             {
                 if (rs.getString("TipRegPenEstReg").equals("A")) {
-                    tipoRegimen.add(new TipoRegimen (rs.getString("TipRegPenCod"), rs.getString("TipRegPenDes"),
+                    tipoRegimen.add(new TipoRegimenClass (rs.getString("TipRegPenCod"), rs.getString("TipRegPenDes"),
                             rs.getString("TipRegPenEstReg"), rs.getString("afp_AfpCod")));
                 }
             }

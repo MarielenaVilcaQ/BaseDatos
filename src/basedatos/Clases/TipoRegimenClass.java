@@ -9,14 +9,14 @@ package basedatos.Clases;
  *
  * @author asus
  */
-public class TipoRegimen {
+public class TipoRegimenClass {
     
     String TipRegPenCod;
     String TipRegPenDes;
     String TipRegPenEstReg;
     String afp_AfpCod;
 
-    public TipoRegimen(String TipRegPenCod, String TipRegPenDes, String TipRegPenEstReg, String afp_AfpCod) {
+    public TipoRegimenClass(String TipRegPenCod, String TipRegPenDes, String TipRegPenEstReg, String afp_AfpCod) {
         this.TipRegPenCod = TipRegPenCod;
         this.TipRegPenDes = TipRegPenDes;
         this.TipRegPenEstReg = TipRegPenEstReg;

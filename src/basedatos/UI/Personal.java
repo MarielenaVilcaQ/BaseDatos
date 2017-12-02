@@ -4,7 +4,8 @@
  * and open the template in the editor.
  */
 package basedatos.UI;
-
+import basedatos.Clases.RegimenClass;
+import basedatos.Clases.TipoRegimenClass;
 import basedatos.Conexion;
 import java.awt.Dimension;
 import java.awt.Toolkit;
@@ -27,6 +28,7 @@ import javax.swing.table.DefaultTableModel;
 public class Personal extends javax.swing.JFrame {
     
     TipoDocumento tipoDocumento;
+    ArrayList<RegimenClass> regimen;
 
     /**
      * Creates new form Personal
@@ -140,7 +142,7 @@ public class Personal extends javax.swing.JFrame {
         jButton22 = new javax.swing.JButton();
         SeguroSi = new javax.swing.JRadioButton();
         SeguroNo = new javax.swing.JRadioButton();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        comboBox_Regimen = new javax.swing.JComboBox<>();
         jComboBox2 = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -393,7 +395,7 @@ public class Personal extends javax.swing.JFrame {
         SeguroNo.setSelected(true);
         SeguroNo.setText("No");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        comboBox_Regimen.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
@@ -456,7 +458,7 @@ public class Personal extends javax.swing.JFrame {
                                 .addGap(46, 46, 46)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(comboBox_Regimen, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(layout.createSequentialGroup()
@@ -658,7 +660,7 @@ public class Personal extends javax.swing.JFrame {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(jLabel23)
                                     .addComponent(jButton9)
-                                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(comboBox_Regimen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(13, 13, 13)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(jLabel27)
@@ -865,6 +867,7 @@ public class Personal extends javax.swing.JFrame {
         comboBox_Sexo();
         comboBox_GrupoSanguineo();
         comboBox_EstadoCivil();
+        comboBox_RegimenPensionario();
     }//GEN-LAST:event_jButton16ActionPerformed
 
     private void jTextField13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField13ActionPerformed
@@ -1275,6 +1278,32 @@ public class Personal extends javax.swing.JFrame {
         }
     }
     
+    public void comboBox_RegimenPensionario() {
+        try {
+            regimen = new ArrayList<RegimenClass>();
+            String sql = "SELECT * FROM regimen_pensionario";
+            Statement s = Conexion.obtener().createStatement();
+            ResultSet rs = s.executeQuery(sql);
+            while(rs.next())
+            {
+                if (rs.getString("RegPenEstReg").equals("A")) {
+                    regimen.add(new RegimenClass (rs.getString("RegPenCod"), rs.getString("RegPenSppCus"), rs.getString("RegPenFecInsAnio"),
+                    rs.getString("RegPenFecInsMes"), rs.getString("RegPenFecInsDia"), rs.getString("RegPenEstReg"), rs.getString("TIPO_REGIMEN_PENSIONARIO_TipRegPenCod")));
+                }
+            }
+            String [] arrRegimen = new String [regimen.size()];
+            for (int i = 0; i < arrRegimen.length; i++) {
+                arrRegimen[i] = regimen.get(i).getRegPenSppCus();
+            }
+            comboBox_Regimen.setModel(new javax.swing.DefaultComboBoxModel(arrRegimen));;
+        } catch (SQLException ex) {
+        Logger.getLogger(TipoDocumento.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+        Logger.getLogger(TipoDocumento.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    
     /**
      * @param args the command line arguments
      */
@@ -1330,6 +1359,7 @@ public class Personal extends javax.swing.JFrame {
         personal.comboBox_Sexo();
         personal.comboBox_GrupoSanguineo();
         personal.comboBox_EstadoCivil();
+        personal.comboBox_RegimenPensionario();
         personal.setVisible(true);
     }
 
@@ -1344,6 +1374,7 @@ public class Personal extends javax.swing.JFrame {
     private javax.swing.JRadioButton SindicalizadoSi;
     private javax.swing.JComboBox<String> comboBox_EstadoCivil;
     private javax.swing.JComboBox<String> comboBox_GrupoSanguineo;
+    private javax.swing.JComboBox<String> comboBox_Regimen;
     private javax.swing.JComboBox<String> comboBox_Sexo;
     private javax.swing.JComboBox<String> comboBox_SituacionEPS;
     private javax.swing.JComboBox<String> comboBox_banco;
@@ -1373,7 +1404,6 @@ public class Personal extends javax.swing.JFrame {
     private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
     private javax.swing.JButton jButton9;
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JComboBox<String> jComboBox20;
     private javax.swing.JComboBox<String> jComboBox7;
@@ -1433,4 +1463,5 @@ public class Personal extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField8;
     private javax.swing.JTextField jTextField9;
     // End of variables declaration//GEN-END:variables
+
 }

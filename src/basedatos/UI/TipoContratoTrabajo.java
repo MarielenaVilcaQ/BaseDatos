@@ -11,6 +11,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JTable;
 //import javax.swing.JFrame;
 import javax.swing.table.DefaultTableModel;
 /**
@@ -52,7 +53,7 @@ public class TipoContratoTrabajo extends javax.swing.JFrame {
         modificar = new javax.swing.JButton();
         eliminar = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         cancelar.setText("Cancelar");
         cancelar.addActionListener(new java.awt.event.ActionListener() {
@@ -244,7 +245,7 @@ public class TipoContratoTrabajo extends javax.swing.JFrame {
     }//GEN-LAST:event_cancelarActionPerformed
 
     private void salirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salirActionPerformed
-        System.exit(0);
+        this.dispose();
     }//GEN-LAST:event_salirActionPerformed
 
     private void inactivarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inactivarActionPerformed
@@ -425,6 +426,11 @@ public class TipoContratoTrabajo extends javax.swing.JFrame {
         estado.setEditable(false);
     }//GEN-LAST:event_eliminarActionPerformed
 
+
+    public JTable getJTable () {
+        return jTable1;
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -455,27 +461,27 @@ public class TipoContratoTrabajo extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-            TipoContratoTrabajo tipoContratoTrabajo = new TipoContratoTrabajo();
-            tipoContratoTrabajo.setTitle("Tipo de Contrato de Trabajo");
-            try {
-            String sql = "SELECT * FROM tipo_contrato_trabajo";
-            Statement s = Conexion.obtener().createStatement();
-            ResultSet rs = s.executeQuery(sql);
-            DefaultTableModel model = new DefaultTableModel(new String[]{"Codigo", "Descripcion", "Estado de registro"}, 0);
-            while(rs.next())
-            {
-                String d = rs.getString("TipConTraCod");
-                String e = rs.getString("TipConTraDes");
-                String f = rs.getString("TipConTraEstReg");
-                model.addRow(new Object[]{d, e, f });
-            }
-            tipoContratoTrabajo.jTable1.setModel(model);
-            } catch (SQLException ex) {
-            Logger.getLogger(TipoTrabajador.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (ClassNotFoundException ex) {
-            Logger.getLogger(TipoTrabajador.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            tipoContratoTrabajo.setVisible(true);
+                TipoContratoTrabajo tipoContratoTrabajo = new TipoContratoTrabajo();
+                tipoContratoTrabajo.setTitle("Tipo de Contrato de Trabajo");
+                try {
+                String sql = "SELECT * FROM tipo_contrato_trabajo";
+                Statement s = Conexion.obtener().createStatement();
+                ResultSet rs = s.executeQuery(sql);
+                DefaultTableModel model = new DefaultTableModel(new String[]{"Codigo", "Descripcion", "Estado de registro"}, 0);
+                while(rs.next())
+                {
+                    String d = rs.getString("TipConTraCod");
+                    String e = rs.getString("TipConTraDes");
+                    String f = rs.getString("TipConTraEstReg");
+                    model.addRow(new Object[]{d, e, f });
+                }
+                tipoContratoTrabajo.jTable1.setModel(model);
+                } catch (SQLException ex) {
+                Logger.getLogger(TipoTrabajador.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (ClassNotFoundException ex) {
+                Logger.getLogger(TipoTrabajador.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                tipoContratoTrabajo.setVisible(true);
             }
         });
     }

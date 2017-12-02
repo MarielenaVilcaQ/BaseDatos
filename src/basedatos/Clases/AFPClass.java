@@ -8,12 +8,12 @@ package basedatos.Clases;
  *
  * @author asus
  */
-public class AFP {
+public class AFPClass {
     String AfpCod;
     String AfpDes;
     String AfpEstReg;
     
-    public AFP (String AfpCod, String AfpDes, String AfpEstReg) {
+    public AFPClass (String AfpCod, String AfpDes, String AfpEstReg) {
         this.AfpCod = AfpCod;
         this.AfpDes = AfpDes;
         this.AfpEstReg = AfpEstReg;
