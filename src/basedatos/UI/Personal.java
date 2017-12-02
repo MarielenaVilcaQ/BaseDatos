@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 package basedatos.UI;
-import basedatos.Clases.RegimenClass;
+import basedatos.Clases.RegimenPensionarioClass;
 import basedatos.Clases.TipoRegimenClass;
 import basedatos.Conexion;
 import java.awt.Dimension;
@@ -28,7 +28,7 @@ import javax.swing.table.DefaultTableModel;
 public class Personal extends javax.swing.JFrame {
     
     TipoDocumento tipoDocumento;
-    ArrayList<RegimenClass> regimen;
+    ArrayList<RegimenPensionarioClass> regimen;
 
     /**
      * Creates new form Personal
@@ -1280,14 +1280,14 @@ public class Personal extends javax.swing.JFrame {
     
     public void comboBox_RegimenPensionario() {
         try {
-            regimen = new ArrayList<RegimenClass>();
+            regimen = new ArrayList<RegimenPensionarioClass>();
             String sql = "SELECT * FROM regimen_pensionario";
             Statement s = Conexion.obtener().createStatement();
             ResultSet rs = s.executeQuery(sql);
             while(rs.next())
             {
                 if (rs.getString("RegPenEstReg").equals("A")) {
-                    regimen.add(new RegimenClass (rs.getString("RegPenCod"), rs.getString("RegPenSppCus"), rs.getString("RegPenFecInsAnio"),
+                    regimen.add(new RegimenPensionarioClass (rs.getString("RegPenCod"), rs.getString("RegPenSppCus"), rs.getString("RegPenFecInsAnio"),
                     rs.getString("RegPenFecInsMes"), rs.getString("RegPenFecInsDia"), rs.getString("RegPenEstReg"), rs.getString("TIPO_REGIMEN_PENSIONARIO_TipRegPenCod")));
                 }
             }

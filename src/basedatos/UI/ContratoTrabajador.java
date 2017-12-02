@@ -5,10 +5,17 @@
  */
 package basedatos.UI;
 
+import basedatos.Clases.CategoriaAcademicaClass;
+import basedatos.Clases.RegimenClass;
+import basedatos.Clases.SedeClass;
+import basedatos.Clases.TipoContratoClass;
+import basedatos.Clases.TipoRegimenClass;
+import basedatos.Clases.TipoTrabajorClass;
 import basedatos.Conexion;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
@@ -18,6 +25,12 @@ import javax.swing.table.DefaultTableModel;
  * @author Marie
  */
 public class ContratoTrabajador extends javax.swing.JFrame {
+    
+    ArrayList<TipoContratoClass> tipoContrato;
+    ArrayList<TipoTrabajorClass> tipoTrabajor;
+    ArrayList<RegimenClass> regimen;
+    ArrayList<CategoriaAcademicaClass> categoriaAcademica;
+    ArrayList<SedeClass> sede;
 
     /**
      * Creates new form ContratoTrabajador
@@ -47,11 +60,11 @@ public class ContratoTrabajador extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jTextField3 = new javax.swing.JTextField();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jComboBox2 = new javax.swing.JComboBox<>();
-        jComboBox3 = new javax.swing.JComboBox<>();
-        jComboBox4 = new javax.swing.JComboBox<>();
-        jComboBox5 = new javax.swing.JComboBox<>();
+        comboBox_TipoTrabajor = new javax.swing.JComboBox<>();
+        comboBox_TipoContrato = new javax.swing.JComboBox<>();
+        comboBox_Regimen = new javax.swing.JComboBox<>();
+        comboBox_CategoriaAcademica = new javax.swing.JComboBox<>();
+        comboBox_Sede = new javax.swing.JComboBox<>();
         jLabel10 = new javax.swing.JLabel();
         jSpinner1 = new javax.swing.JSpinner();
         jLabel11 = new javax.swing.JLabel();
@@ -118,15 +131,15 @@ public class ContratoTrabajador extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(jTable1);
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        comboBox_TipoTrabajor.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        comboBox_TipoContrato.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        comboBox_Regimen.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        jComboBox4.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        comboBox_CategoriaAcademica.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        jComboBox5.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        comboBox_Sede.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         jLabel10.setText("dia: ");
 
@@ -208,6 +221,11 @@ public class ContratoTrabajador extends javax.swing.JFrame {
         });
 
         jButton14.setText("Actualizar Grillas");
+        jButton14.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton14ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -266,11 +284,11 @@ public class ContratoTrabajador extends javax.swing.JFrame {
                                     .addComponent(jTextField3)
                                     .addGroup(layout.createSequentialGroup()
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                            .addComponent(jComboBox1, javax.swing.GroupLayout.Alignment.LEADING, 0, 174, Short.MAX_VALUE)
-                                            .addComponent(jComboBox2, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(jComboBox5, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(jComboBox4, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(jComboBox3, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                            .addComponent(comboBox_TipoTrabajor, javax.swing.GroupLayout.Alignment.LEADING, 0, 174, Short.MAX_VALUE)
+                                            .addComponent(comboBox_TipoContrato, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(comboBox_Sede, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(comboBox_CategoriaAcademica, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(comboBox_Regimen, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(jButton9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -317,29 +335,29 @@ public class ContratoTrabajador extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(comboBox_TipoTrabajor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton9))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(comboBox_TipoContrato, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton10))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(comboBox_Regimen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton11))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel5)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jComboBox4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(comboBox_CategoriaAcademica, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jButton12)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel6)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jComboBox5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(comboBox_Sede, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jButton13)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -519,6 +537,139 @@ public class ContratoTrabajador extends javax.swing.JFrame {
         sede.setVisible(true);
     }//GEN-LAST:event_jButton13ActionPerformed
 
+    private void jButton14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton14ActionPerformed
+        comboBox_TipoTrabajor();
+        comboBox_TipoContrato();
+        comboBox_Regimen();
+        comboBox_CategoriaAcademica();
+        comboBox_Sede();
+    }//GEN-LAST:event_jButton14ActionPerformed
+
+    public void comboBox_Sede() {
+        try {
+            sede = new ArrayList<SedeClass>();
+            String sql = "SELECT * FROM sede";
+            Statement s = Conexion.obtener().createStatement();
+            ResultSet rs = s.executeQuery(sql);
+            while(rs.next())
+            {
+                if (rs.getString("EstReg").equals("A")) {
+                    sede.add(new SedeClass(rs.getString("SedCod"), rs.getString("SedDes"),
+                            rs.getString("EstReg")));
+                }
+            }
+            String [] arrSede = new String [sede.size()];
+            for (int i = 0; i < arrSede.length; i++) {
+                arrSede[i] = sede.get(i).getSedDes();
+            }
+            comboBox_Sede.setModel(new javax.swing.DefaultComboBoxModel(arrSede));;
+        } catch (SQLException ex) {
+        Logger.getLogger(TipoDocumento.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+        Logger.getLogger(TipoDocumento.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+            
+    public void comboBox_CategoriaAcademica() {
+        try {
+            categoriaAcademica = new ArrayList<CategoriaAcademicaClass>();
+            String sql = "SELECT * FROM categoria_academica";
+            Statement s = Conexion.obtener().createStatement();
+            ResultSet rs = s.executeQuery(sql);
+            while(rs.next())
+            {
+                if (rs.getString("CatAcaEstReg").equals("A")) {
+                    categoriaAcademica.add(new CategoriaAcademicaClass(rs.getString("CatAcaCod"), rs.getString("CatAcaDes"),
+                            rs.getString("CatAcaEstReg")));
+                }
+            }
+            String [] arrCategoriaAcademica = new String [categoriaAcademica.size()];
+            for (int i = 0; i < arrCategoriaAcademica.length; i++) {
+                arrCategoriaAcademica[i] = categoriaAcademica.get(i).getCatAcaDes();
+            }
+            comboBox_CategoriaAcademica.setModel(new javax.swing.DefaultComboBoxModel(arrCategoriaAcademica));;
+        } catch (SQLException ex) {
+        Logger.getLogger(TipoDocumento.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+        Logger.getLogger(TipoDocumento.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void comboBox_Regimen() {
+        try {
+            regimen = new ArrayList<RegimenClass>();
+            String sql = "SELECT * FROM regimen";
+            Statement s = Conexion.obtener().createStatement();
+            ResultSet rs = s.executeQuery(sql);
+            while(rs.next())
+            {
+                if (rs.getString("RegEstReg").equals("A")) {
+                    regimen.add(new RegimenClass(rs.getString("RegCod"), rs.getString("RegDes"),
+                            rs.getString("RegEstReg")));
+                }
+            }
+            String [] arrRegimen = new String [regimen.size()];
+            for (int i = 0; i < arrRegimen.length; i++) {
+                arrRegimen[i] = regimen.get(i).getRegDes();
+            }
+            comboBox_Regimen.setModel(new javax.swing.DefaultComboBoxModel(arrRegimen));;
+        } catch (SQLException ex) {
+        Logger.getLogger(TipoDocumento.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+        Logger.getLogger(TipoDocumento.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void comboBox_TipoContrato() {
+        try {
+            tipoContrato = new ArrayList<TipoContratoClass>();
+            String sql = "SELECT * FROM tipo_contrato_trabajo";
+            Statement s = Conexion.obtener().createStatement();
+            ResultSet rs = s.executeQuery(sql);
+            while(rs.next())
+            {
+                if (rs.getString("TipConTraEstReg").equals("A")) {
+                    tipoContrato.add(new TipoContratoClass(rs.getString("TipConTraCod"), rs.getString("TipConTraDes"),
+                            rs.getString("TipConTraEstReg")));
+                }
+            }
+            String [] arrContrato = new String [tipoContrato.size()];
+            for (int i = 0; i < arrContrato.length; i++) {
+                arrContrato[i] = tipoContrato.get(i).getTipConTraDes();
+            }
+            comboBox_TipoContrato.setModel(new javax.swing.DefaultComboBoxModel(arrContrato));;
+        } catch (SQLException ex) {
+        Logger.getLogger(TipoDocumento.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+        Logger.getLogger(TipoDocumento.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void comboBox_TipoTrabajor() {
+        try {
+            tipoTrabajor = new ArrayList<TipoTrabajorClass>();
+            String sql = "SELECT * FROM tipo_trabajador";
+            Statement s = Conexion.obtener().createStatement();
+            ResultSet rs = s.executeQuery(sql);
+            while(rs.next())
+            {
+                if (rs.getString("TipTraEstReg").equals("A")) {
+                    tipoTrabajor.add(new TipoTrabajorClass (rs.getString("TipTraCod"), rs.getString("TipTraDes"),
+                            rs.getString("TipTraEstReg")));
+                }
+            }
+            String [] arrTrabajor = new String [tipoTrabajor.size()];
+            for (int i = 0; i < arrTrabajor.length; i++) {
+                arrTrabajor[i] = tipoTrabajor.get(i).getTipTraDes();
+            }
+            comboBox_TipoTrabajor.setModel(new javax.swing.DefaultComboBoxModel(arrTrabajor));;
+        } catch (SQLException ex) {
+        Logger.getLogger(TipoDocumento.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+        Logger.getLogger(TipoDocumento.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -551,12 +702,23 @@ public class ContratoTrabajador extends javax.swing.JFrame {
             public void run() {
                 ContratoTrabajador contratoTrabajador = new ContratoTrabajador();
                 contratoTrabajador.setTitle("Contrato Trabajador");
+                //
+                contratoTrabajador.comboBox_TipoTrabajor();
+                contratoTrabajador.comboBox_TipoContrato();
                 contratoTrabajador.setVisible(true);
+                contratoTrabajador.comboBox_Regimen();
+                contratoTrabajador.comboBox_CategoriaAcademica();
+                contratoTrabajador.comboBox_Sede();
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> comboBox_CategoriaAcademica;
+    private javax.swing.JComboBox<String> comboBox_Regimen;
+    private javax.swing.JComboBox<String> comboBox_Sede;
+    private javax.swing.JComboBox<String> comboBox_TipoContrato;
+    private javax.swing.JComboBox<String> comboBox_TipoTrabajor;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton11;
@@ -571,11 +733,6 @@ public class ContratoTrabajador extends javax.swing.JFrame {
     private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
     private javax.swing.JButton jButton9;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox2;
-    private javax.swing.JComboBox<String> jComboBox3;
-    private javax.swing.JComboBox<String> jComboBox4;
-    private javax.swing.JComboBox<String> jComboBox5;
     private javax.swing.JComboBox<String> jComboBox6;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;

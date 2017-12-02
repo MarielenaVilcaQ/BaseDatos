@@ -11,77 +11,37 @@ package basedatos.Clases;
  */
 public class RegimenClass {
     
-    String RegPenCod;
-    String RegPenSppCus;
-    String RegPenFecInsAnio;
-    String RegPenFecInsMes;
-    String RegPenFecInsDia;
-    String RegPenEstReg;
-    String TIPO_REGIMEN_PENSIONARIO_TipRegPenCod;
+    String RegCod;
+    String RegDes;
+    String RegEstReg;
 
-    public RegimenClass(String RegPenCod, String RegPenSppCus, String RegPenFecInsAnio, String RegPenFecInsMes, String RegPenFecInsDia, String RegPenEstReg, String TIPO_REGIMEN_PENSIONARIO_TipRegPenCod) {
-        this.RegPenCod = RegPenCod;
-        this.RegPenSppCus = RegPenSppCus;
-        this.RegPenFecInsAnio = RegPenFecInsAnio;
-        this.RegPenFecInsMes = RegPenFecInsMes;
-        this.RegPenFecInsDia = RegPenFecInsDia;
-        this.RegPenEstReg = RegPenEstReg;
-        this.TIPO_REGIMEN_PENSIONARIO_TipRegPenCod = TIPO_REGIMEN_PENSIONARIO_TipRegPenCod;
+    public RegimenClass(String RegCod, String RegDes, String RegEstReg) {
+        this.RegCod = RegCod;
+        this.RegDes = RegDes;
+        this.RegEstReg = RegEstReg;
+    }
+    
+    public String getRegCod() {
+        return RegCod;
     }
 
-    public String getRegPenCod() {
-        return RegPenCod;
+    public String getRegDes() {
+        return RegDes;
     }
 
-    public String getRegPenEstReg() {
-        return RegPenEstReg;
+    public String getRegEstReg() {
+        return RegEstReg;
     }
 
-    public String getRegPenFecInsAnio() {
-        return RegPenFecInsAnio;
+    public void setRegCod(String RegCod) {
+        this.RegCod = RegCod;
     }
 
-    public String getRegPenFecInsDia() {
-        return RegPenFecInsDia;
+    public void setRegDes(String RegDes) {
+        this.RegDes = RegDes;
     }
 
-    public String getRegPenFecInsMes() {
-        return RegPenFecInsMes;
-    }
-
-    public String getRegPenSppCus() {
-        return RegPenSppCus;
-    }
-
-    public String getTIPO_REGIMEN_PENSIONARIO_TipRegPenCod() {
-        return TIPO_REGIMEN_PENSIONARIO_TipRegPenCod;
-    }
-
-    public void setRegPenCod(String RegPenCod) {
-        this.RegPenCod = RegPenCod;
-    }
-
-    public void setRegPenEstReg(String RegPenEstReg) {
-        this.RegPenEstReg = RegPenEstReg;
-    }
-
-    public void setRegPenFecInsAnio(String RegPenFecInsAnio) {
-        this.RegPenFecInsAnio = RegPenFecInsAnio;
-    }
-
-    public void setRegPenFecInsDia(String RegPenFecInsDia) {
-        this.RegPenFecInsDia = RegPenFecInsDia;
-    }
-
-    public void setRegPenFecInsMes(String RegPenFecInsMes) {
-        this.RegPenFecInsMes = RegPenFecInsMes;
-    }
-
-    public void setRegPenSppCus(String RegPenSppCus) {
-        this.RegPenSppCus = RegPenSppCus;
-    }
-
-    public void setTIPO_REGIMEN_PENSIONARIO_TipRegPenCod(String TIPO_REGIMEN_PENSIONARIO_TipRegPenCod) {
-        this.TIPO_REGIMEN_PENSIONARIO_TipRegPenCod = TIPO_REGIMEN_PENSIONARIO_TipRegPenCod;
+    public void setRegEstReg(String RegEstReg) {
+        this.RegEstReg = RegEstReg;
     }
 }
