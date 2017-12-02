@@ -12,6 +12,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JTable;
 //import javax.swing.JFrame;
 import javax.swing.table.DefaultTableModel;
 /**
@@ -53,7 +54,7 @@ public class UnidadAcademica extends javax.swing.JFrame {
         modificar = new javax.swing.JButton();
         eliminar = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         cancelar.setText("Cancelar");
         cancelar.addActionListener(new java.awt.event.ActionListener() {
@@ -253,7 +254,7 @@ public class UnidadAcademica extends javax.swing.JFrame {
     }//GEN-LAST:event_cancelarActionPerformed
 
     private void salirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salirActionPerformed
-        System.exit(0);
+        this.dispose();
     }//GEN-LAST:event_salirActionPerformed
 
     private void inactivarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inactivarActionPerformed
@@ -488,6 +489,10 @@ public class UnidadAcademica extends javax.swing.JFrame {
         }*/
     }//GEN-LAST:event_eliminarActionPerformed
 
+    public JTable getJTable () {
+        return jTable1;
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -518,28 +523,27 @@ public class UnidadAcademica extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-            UnidadAcademica unidadAcademica = new UnidadAcademica();
-            unidadAcademica.setTitle("Unidad Academica");
-            try {
-            String sql = "SELECT * FROM unidad_academica";
-            Statement s = Conexion.obtener().createStatement();
-            ResultSet rs = s.executeQuery(sql);
-            DefaultTableModel model = new DefaultTableModel(new String[]{"Codigo", "Descripcion", "Estado de registro"}, 0);
-            while(rs.next())
-            {
-                String d = rs.getString("UniAcaCod");
-                String e = rs.getString("UniAcaDes");
-                String f = rs.getString("UniAcaEstReg");
-                model.addRow(new Object[]{d, e, f });
-            }
-            unidadAcademica.jTable1.setModel(model);
-            } catch (SQLException ex) {
-            Logger.getLogger(TipoTrabajador.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (ClassNotFoundException ex) {
-            Logger.getLogger(TipoTrabajador.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            unidadAcademica.setVisible(true);
-                
+                UnidadAcademica unidadAcademica = new UnidadAcademica();
+                unidadAcademica.setTitle("Unidad Academica");
+                try {
+                String sql = "SELECT * FROM unidad_academica";
+                Statement s = Conexion.obtener().createStatement();
+                ResultSet rs = s.executeQuery(sql);
+                DefaultTableModel model = new DefaultTableModel(new String[]{"Codigo", "Descripcion", "Estado de registro"}, 0);
+                while(rs.next())
+                {
+                    String d = rs.getString("UniAcaCod");
+                    String e = rs.getString("UniAcaDes");
+                    String f = rs.getString("UniAcaEstReg");
+                    model.addRow(new Object[]{d, e, f });
+                }
+                unidadAcademica.jTable1.setModel(model);
+                } catch (SQLException ex) {
+                Logger.getLogger(TipoTrabajador.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (ClassNotFoundException ex) {
+                Logger.getLogger(TipoTrabajador.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                unidadAcademica.setVisible(true);
             }
         });
     }
