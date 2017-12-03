@@ -160,7 +160,7 @@ public class Personal extends javax.swing.JFrame {
         jButton21 = new javax.swing.JButton();
         comboBox_ubigeo = new javax.swing.JComboBox<>();
         jButton22 = new javax.swing.JButton();
-        comboBox_Regimen = new javax.swing.JComboBox<>();
+        comboBox_RegimenPensionario = new javax.swing.JComboBox<>();
         comboBox_Discapacidad = new javax.swing.JComboBox<>();
         comboBox_Sindicalizado = new javax.swing.JComboBox<>();
         comboBox_ControlInmediato = new javax.swing.JComboBox<>();
@@ -398,7 +398,7 @@ public class Personal extends javax.swing.JFrame {
             }
         });
 
-        comboBox_Regimen.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        comboBox_RegimenPensionario.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         comboBox_Discapacidad.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
@@ -468,7 +468,7 @@ public class Personal extends javax.swing.JFrame {
                                     .addComponent(jLabel33))
                                 .addGap(46, 46, 46)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(comboBox_Regimen, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(comboBox_RegimenPensionario, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                         .addComponent(comboBox_ControlInmediato, javax.swing.GroupLayout.Alignment.LEADING, 0, 88, Short.MAX_VALUE)
                                         .addComponent(comboBox_Discapacidad, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
@@ -716,7 +716,7 @@ public class Personal extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel23)
-                            .addComponent(comboBox_Regimen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(comboBox_RegimenPensionario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jButton25))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -1024,7 +1024,7 @@ public class Personal extends javax.swing.JFrame {
         nombreConyuge.setText("");
         numeroHijos.setValue(0);
         comboBox_ocupacion.setSelectedIndex(0);
-        comboBox_Regimen.setSelectedIndex(0);
+        comboBox_RegimenPensionario.setSelectedIndex(0);
         comboBox_Discapacidad.setSelectedIndex(0);
         comboBox_ControlInmediato.setSelectedIndex(0);
         comboBox_Sindicalizado.setSelectedIndex(0);
@@ -1090,10 +1090,21 @@ public class Personal extends javax.swing.JFrame {
             case 'm':
             try {
                 Statement s = Conexion.obtener().createStatement();
-                //PreparedStatement ps = Conexion.obtener().prepareStatement("UPDATE `tipo_regimen_pensionario`"
-                //    + "SET `afp_AfpCod` = '"+ codigoafp.getText() +"', `TipRegPenDes` = '"
-                //    + descripcion.getText()+"', `TipRegPenEstReg` = '"+ estado.getText() +"'"
-                //    + "WHERE `tipo_regimen_pensionario`.`TipRegPenCod` = '"+ codigo.getText() +"'; ");
+                //PreparedStatement ps = Conexion.obtener().prepareStatement("UPDATE `personal` "
+                //        + "SET `PerCod` = '"+codigo.getText()+"', `PerApePat` = '"+paterno.getText()+"', `PerApeMat` = '"+materno.getText()+"', "
+                //        + "`PerTraNom` = '"+nombre.getText()+"', `PerDocNum` = '"+documento.getText()+"', `PerFecNacAnio` = '"+anio.getValue()+"', "
+                ///        + "`PerFecNacMes` = '"+mes.getValue()+"', `PerFecNacDia` = '"+dia.getValue()+"', `PerDom` = '"+domicilio.getText()+"', "
+                //        + "`PerCorEle` = '"+correo.getText()+"', `PerTel` = '"+telefono.getText()+"', `PerCel` = '"+celular.getText()+"', "
+                //        + "`PerConApePat` = '"+paternoConyuge.getText()+"', `PerConApeMat` = '"+maternoConyuge.getText()+"', `PerConNom` = '"+nombreConyuge.getText()+"', "
+                //        + "`PerHijNum` = '"+numeroHijos.getValue()+"', `PerOtrIng` = '"+otrosIngresos.getText()+"', `PerCueNum` = '"+numeroCuenta.getText()+"', "
+                //        + "`PerEstReg` = '"+comboBox_EstadoRegistro.getSelectedItem().toString()+"', `OCUPACION_OcuCod` = '"+comboBox_ocupacion.getSelectedItem().toString()+"', "
+                //        + "`REGIMEN_PENSIONARIO_RegPenCod` = '"++"', `BANCO_BanCod1` = '"++"', "
+                //        + "`SITUACION_EPS_SitEpsCod` = '"++"', `PAIS_PaiCod` = '"++"', "
+                //        + "`UBIGEO_UbiCod` = '"++"', `ESTADO_CIVIL_EstCivCod` = '"++"', "
+                //        + "`GRUPO_SANGUINEO_GruSanCod` = '"++"', `NIVEL_EDUCATIVO_NivEduCod` = '"++"', "
+                //        + "`SEXO_SexCod` = '"++"', `TIPO_DOCUMENTO_TipDocCod` = '"++"', `PerDisCod` = '"++"', "
+                //        + "`PerSinCod` = '"++"', `PerSegCod` = '"++"', `PerConInmCod` = '"++"' "
+                //        + "WHERE `personal`.`PerCod` = '000001';");
                 //ps.execute();
                 //ps = Conexion.obtener().prepareStatement("COMMIT;");
                 //ps.execute();
@@ -1218,7 +1229,7 @@ public class Personal extends javax.swing.JFrame {
         nombreConyuge.setText("");
         numeroHijos.setValue(0);
         comboBox_ocupacion.setSelectedIndex(0);
-        comboBox_Regimen.setSelectedIndex(0);
+        comboBox_RegimenPensionario.setSelectedIndex(0);
         comboBox_Discapacidad.setSelectedIndex(0);
         comboBox_ControlInmediato.setSelectedIndex(0);
         comboBox_Sindicalizado.setSelectedIndex(0);
@@ -1262,7 +1273,7 @@ public class Personal extends javax.swing.JFrame {
     public String selecRegimenPensionario () {
         String selecRegimenPensionario = "000000";
         for (RegimenPensionarioClass regimenPensionario : regimenPensionario) {
-            if (regimenPensionario.getRegPenCod().equals(comboBox_Regimen.getSelectedItem().toString()))
+            if (regimenPensionario.getRegPenCod().equals(comboBox_RegimenPensionario.getSelectedItem().toString()))
                 selecRegimenPensionario = regimenPensionario.getRegPenCod();
         }
         return selecRegimenPensionario;
@@ -1373,58 +1384,70 @@ public class Personal extends javax.swing.JFrame {
         flag = 'm';
         try {
             int row = jTable2.getSelectedRow();
-            String sql = "SELECT * FROM personal WHERE `PerCod` = '"+ jTable2.getValueAt(row, 0) + "" +"';";
+            String sql = "SELECT PerCod, PerApePat, PerApeMat, PerTraNom, PerDocNum, "
+                    + "TipDocDes, PerFecNacDia, PerFecNacMes, PerFecNacAnio, "
+                    + "PerConApePat, PerConApeMat, PerConNom, PerHijNum, "
+                    + "OcuDes, RegPenCod, PerDisCod, PerConInmCod, PerSinCod, PerSegCod, "
+                    + "UBIGEO_UbiCod, PaiDes, PerDom, PerCorEle, PerTel, PerCel, "
+                    + "PerOtrIng, PerCueNum, BanNom, NivEduDes, "
+                    + "SitEpsDes, SexDes, GruSanDes, "
+                    + "EstCivDes, PerEstReg, PerDisCod, PerSinCod, PerSegCod, PerConInmCod "
+                    + "FROM personal, tipo_documento, ocupacion, regimen_pensionario, "
+                    + "situacion_eps, sexo, grupo_sanguineo, estado_civil, "
+                    + "sino, ubigeo, pais, banco, nivel_educativo "
+                    + "WHERE personal.PerCod = '"+ jTable2.getValueAt(row, 0) +"' AND "
+                    + "TIPO_DOCUMENTO_TipDocCod = TipDocCod AND "
+                    + "OCUPACION_OcuCod = OcuCod AND "
+                    + "REGIMEN_PENSIONARIO_RegPenCod = RegPenCod AND "
+                    + "BANCO_BanCod1 = BanCod AND "
+                    + "NIVEL_EDUCATIVO_NivEduCod = NivEduCod AND "
+                    + "SITUACION_EPS_SitEpsCod = SitEpsCod AND "
+                    + "SEXO_SexCod = SexCod AND "
+                    + "GRUPO_SANGUINEO_GruSanCod = GruSanCod AND "
+                    + "ESTADO_CIVIL_EstCivCod = EstCivCod;";
             Statement s = Conexion.obtener().createStatement();
             ResultSet rs = s.executeQuery(sql);
-            while(rs.next())
-            {
-                String d = rs.getString("PerCod");
-                String e = rs.getString("PerApePat");
-                String f = rs.getString("PerTraNom");
-                String g = rs.getString("PerApeMat");
-                String h = rs.getString("PerCel");
-                String i = rs.getString("PerCorEle");
-                String j = rs.getString("PerEstReg");
+            while(rs.next()) {
+                codigo.setText(rs.getString("PerCod"));
+                paterno.setText(rs.getString("PerApePat"));
+                materno.setText(rs.getString("PerApeMat"));
+                nombre.setText(rs.getString("PerTraNom"));
+                documento.setText(rs.getString("PerDocNum"));
+                comboBox_tipoDocumento.setSelectedItem(rs.getString("TipDocDes"));
+                dia.setValue(Integer.parseInt(rs.getString("PerFecNacDia")));
+                mes.setValue(Integer.parseInt(rs.getString("PerFecNacMes")));
+                anio.setValue(Integer.parseInt(rs.getString("PerFecNacAnio")));
+                paternoConyuge.setText(rs.getString("PerConApePat"));
+                maternoConyuge.setText(rs.getString("PerConApeMat"));
+                nombreConyuge.setText(rs.getString("PerConNom"));
+                numeroHijos.setValue(Integer.parseInt(rs.getString("PerHijNum")));
+                comboBox_ocupacion.setSelectedItem(rs.getString("OcuDes"));
+                comboBox_RegimenPensionario.setSelectedItem(rs.getString("RegPenCod"));
+                //comboBox_Discapacidad.setSelectedItem(rs.getString("PerDisCod"));
+                //comboBox_ControlInmediato.setSelectedItem(rs.getString("PerConInmCod"));
+                //comboBox_Sindicalizado.setSelectedItem(rs.getString("PerSinCod"));
+                //comboBox_Seguro.setSelectedItem(rs.getString("PerSegCod"));
+                comboBox_ubigeo.setSelectedItem(rs.getString("UBIGEO_UbiCod"));
+                comboBox_pais.setSelectedItem(rs.getString("PaiDes"));
+                domicilio.setText(rs.getString("PerDom"));
+                correo.setText(rs.getString("PerCorEle"));
+                telefono.setText(rs.getString("PerTel"));
+                celular.setText(rs.getString("PerCel"));
+                otrosIngresos.setText(rs.getString("PerOtrIng"));
+                numeroCuenta.setText(rs.getString("PerCueNum"));
+                comboBox_banco.setSelectedItem(rs.getString("BanNom"));
+                comboBox_nivelEducativoDes.setSelectedItem(rs.getString("NivEduDes"));
+                comboBox_SituacionEPS.setSelectedItem(rs.getString("SitEpsDes"));
+                comboBox_Sexo.setSelectedItem(rs.getString("SexDes"));
+                comboBox_GrupoSanguineo.setSelectedItem(rs.getString("GruSanDes"));
+                comboBox_EstadoCivil.setSelectedItem(rs.getString("EstCivDes"));
+                comboBox_EstadoRegistro.setSelectedItem(rs.getString("PerEstReg"));
             }
         } catch (SQLException ex) {
             Logger.getLogger(TipoTrabajador.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(TipoTrabajador.class.getName()).log(Level.SEVERE, null, ex);
         }
-        codigo.setText("");
-        paterno.setText("");
-        materno.setText("");
-        nombre.setText("");
-        documento.setText("");
-        comboBox_tipoDocumento.setSelectedIndex(0);
-        dia.setValue(1);
-        mes.setValue(1);
-        anio.setValue(2017);
-        paternoConyuge.setText("");
-        maternoConyuge.setText("");
-        nombreConyuge.setText("");
-        numeroHijos.setValue(0);
-        comboBox_ocupacion.setSelectedIndex(0);
-        comboBox_Regimen.setSelectedIndex(0);
-        comboBox_Discapacidad.setSelectedIndex(0);
-        comboBox_ControlInmediato.setSelectedIndex(0);
-        comboBox_Sindicalizado.setSelectedIndex(0);
-        comboBox_Seguro.setSelectedIndex(0);
-        comboBox_ubigeo.setSelectedIndex(0);
-        comboBox_pais.setSelectedIndex(0);
-        domicilio.setText("");
-        correo.setText("");
-        telefono.setText("");
-        celular.setText("");
-        otrosIngresos.setText("");
-        numeroCuenta.setText("");
-        comboBox_banco.setSelectedIndex(0);
-        comboBox_nivelEducativoDes.setSelectedIndex(0);
-        comboBox_SituacionEPS.setSelectedIndex(0);
-        comboBox_Sexo.setSelectedIndex(0);
-        comboBox_GrupoSanguineo.setSelectedIndex(0);
-        comboBox_EstadoCivil.setSelectedIndex(0);
-        comboBox_EstadoRegistro.setSelectedIndex(0);
     }//GEN-LAST:event_jButton2ActionPerformed
 
     public void comboBox_Sino() {
@@ -1724,7 +1747,7 @@ public class Personal extends javax.swing.JFrame {
             for (int i = 0; i < arrRegimenPensionario.length; i++) {
                 arrRegimenPensionario[i] = regimenPensionario.get(i).getRegPenCod();
             }
-            comboBox_Regimen.setModel(new javax.swing.DefaultComboBoxModel(arrRegimenPensionario));;
+            comboBox_RegimenPensionario.setModel(new javax.swing.DefaultComboBoxModel(arrRegimenPensionario));;
         } catch (SQLException ex) {
         Logger.getLogger(TipoDocumento.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
@@ -1818,7 +1841,7 @@ public class Personal extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> comboBox_EstadoCivil;
     private javax.swing.JComboBox<String> comboBox_EstadoRegistro;
     private javax.swing.JComboBox<String> comboBox_GrupoSanguineo;
-    private javax.swing.JComboBox<String> comboBox_Regimen;
+    private javax.swing.JComboBox<String> comboBox_RegimenPensionario;
     private javax.swing.JComboBox<String> comboBox_Seguro;
     private javax.swing.JComboBox<String> comboBox_Sexo;
     private javax.swing.JComboBox<String> comboBox_Sindicalizado;
