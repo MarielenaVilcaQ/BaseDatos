@@ -134,7 +134,7 @@ public class Personal extends javax.swing.JFrame {
         jLabel33 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable2 = new javax.swing.JTable();
-        jComboBox20 = new javax.swing.JComboBox<>();
+        comboBox_EstadoRegistro = new javax.swing.JComboBox<>();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
@@ -272,7 +272,7 @@ public class Personal extends javax.swing.JFrame {
         ));
         jScrollPane2.setViewportView(jTable2);
 
-        jComboBox20.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "A", "I", "*" }));
+        comboBox_EstadoRegistro.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "A", "I", "*" }));
 
         jButton1.setText("Adicionar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -282,8 +282,18 @@ public class Personal extends javax.swing.JFrame {
         });
 
         jButton2.setText("Modificar");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jButton3.setText("Eliminar");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         jButton4.setText("Cancelar");
 
@@ -292,6 +302,11 @@ public class Personal extends javax.swing.JFrame {
         jButton6.setText("Reactivar");
 
         jButton7.setText("Actualizar");
+        jButton7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton7ActionPerformed(evt);
+            }
+        });
 
         jButton8.setText("Salir");
 
@@ -531,7 +546,7 @@ public class Personal extends javax.swing.JFrame {
                                     .addComponent(otrosIngresos, javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addGroup(layout.createSequentialGroup()
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                            .addComponent(jComboBox20, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(comboBox_EstadoRegistro, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                             .addComponent(comboBox_EstadoCivil, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                             .addComponent(comboBox_GrupoSanguineo, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                             .addComponent(comboBox_SituacionEPS, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -640,7 +655,7 @@ public class Personal extends javax.swing.JFrame {
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(jLabel35)
-                                .addComponent(jComboBox20, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(comboBox_EstadoRegistro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addComponent(jSeparator1))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -994,6 +1009,73 @@ public class Personal extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton19ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        flag = 'a';
+        codigo.setText("");
+        paterno.setText("");
+        materno.setText("");
+        nombre.setText("");
+        documento.setText("");
+        comboBox_tipoDocumento.setSelectedIndex(0);
+        dia.setValue(1);
+        mes.setValue(1);
+        anio.setValue(2017);
+        paternoConyuge.setText("");
+        maternoConyuge.setText("");
+        nombreConyuge.setText("");
+        numeroHijos.setValue(0);
+        comboBox_ocupacion.setSelectedIndex(0);
+        comboBox_Regimen.setSelectedIndex(0);
+        comboBox_Discapacidad.setSelectedIndex(0);
+        comboBox_ControlInmediato.setSelectedIndex(0);
+        comboBox_Sindicalizado.setSelectedIndex(0);
+        comboBox_Seguro.setSelectedIndex(0);
+        comboBox_ubigeo.setSelectedIndex(0);
+        comboBox_pais.setSelectedIndex(0);
+        domicilio.setText("");
+        correo.setText("");
+        telefono.setText("");
+        celular.setText("");
+        otrosIngresos.setText("");
+        numeroCuenta.setText("");
+        comboBox_banco.setSelectedIndex(0);
+        comboBox_nivelEducativoDes.setSelectedIndex(0);
+        comboBox_SituacionEPS.setSelectedIndex(0);
+        comboBox_Sexo.setSelectedIndex(0);
+        comboBox_GrupoSanguineo.setSelectedIndex(0);
+        comboBox_EstadoCivil.setSelectedIndex(0);
+        comboBox_EstadoRegistro.setSelectedIndex(0);
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton25ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton25ActionPerformed
+        RegimenPensionario regimenPensionario = new RegimenPensionario();
+        regimenPensionario.setTitle("Regimen Pensionario");
+        try {
+            String sql = "SELECT * FROM regimen_pensionario";
+            Statement s = Conexion.obtener().createStatement();
+            ResultSet rs = s.executeQuery(sql);
+            DefaultTableModel model = new DefaultTableModel(new String[]{"Codigo", "SPP CUS","ANO", "MES", "DIA", "Estado", "Tipo"}, 0);
+            while(rs.next())
+            {
+                String d = rs.getString("RegPenCod");
+                String e = rs.getString("RegPenSppCus");
+                String f = rs.getString("RegPenFecInsAnio");
+                String g = rs.getString("RegPenFecInsMes");
+                String h = rs.getString("RegPenFecInsDia");
+                String i = rs.getString("RegPenEstReg");
+                String j = rs.getString("TIPO_REGIMEN_PENSIONARIO_TipRegPenCod");
+                model.addRow(new Object[]{d, e, f, g, h, i, j});
+            }
+            regimenPensionario.getJTable().setModel(model);
+        } catch (SQLException ex) {
+            Logger.getLogger(NivelEducativo.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(NivelEducativo.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        regimenPensionario.comboBox_TipoRegimen();
+        regimenPensionario.setVisible(true);
+    }//GEN-LAST:event_jButton25ActionPerformed
+
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
         try {
             PreparedStatement ps = Conexion.obtener().prepareStatement("START TRANSACTION;");
             ps.execute();
@@ -1068,78 +1150,6 @@ public class Personal extends javax.swing.JFrame {
             break;
             case 'a':
             try {
-                //Buscar codigo
-                String selecTipoDocumento = "000000";
-                for (TipoDocumentoClass tipoDocumentoClass : tipoDocumento) {
-                    if (tipoDocumentoClass.getTipDocDes().equals(comboBox_tipoDocumento.getSelectedItem().toString()))
-                        selecTipoDocumento = tipoDocumentoClass.getTipDocCod();
-                }
-                String selecOcupacion = "000000";
-                for (OcupacionClass ocupacion : ocupacion) {
-                    if (ocupacion.getOcuDes().equals(comboBox_ocupacion.getSelectedItem().toString()))
-                        selecOcupacion = ocupacion.getOcuCod();
-                }
-                String selecRegimenPensionario = "000000";
-                for (RegimenPensionarioClass regimenPensionario : regimenPensionario) {
-                    if (regimenPensionario.getRegPenCod().equals(comboBox_ocupacion.getSelectedItem().toString()))
-                        selecRegimenPensionario = regimenPensionario.getRegPenCod();
-                }
-                String selecPais = "000000";
-                for (PaisClass pais : pais) {
-                    if (pais.getPaiDes().equals(comboBox_pais.getSelectedItem().toString()))
-                        selecPais = pais.getPaiCod();
-                }
-                String selecBanco = "000000";
-                for (BancoClass banco : banco) {
-                    if (banco.getBanNom().equals(comboBox_banco.getSelectedItem().toString()))
-                        selecBanco = banco.getBanCod();
-                }
-                String selecNivelEducativo = "000000";
-                for (NivelEducativoClass nivelEducativo : nivelEducativo) {
-                    if (nivelEducativo.getNivEduDes().equals(comboBox_nivelEducativoDes.getSelectedItem().toString()))
-                        selecNivelEducativo = nivelEducativo.getNivEduCod();
-                }
-                String selecSituacionEPS = "000000";
-                for (SituacionEPSClass situacionEPS : situacionEPS) {
-                    if (situacionEPS.getSitEpsDes().equals(comboBox_SituacionEPS.getSelectedItem().toString()))
-                        selecSituacionEPS = situacionEPS.getSitEpsCod();
-                }
-                String selecSexo = "000000";
-                for (SexoClass sexo : sexo) {
-                    if (sexo.getSexDes().equals(comboBox_Sexo.getSelectedItem().toString()))
-                        selecSexo = sexo.getSexCod();
-                }
-                String selecGrupoSanguineo = "000000";
-                for (GrupoSanguineoClass grupoSanguineo : grupoSanguineo) {
-                    if (grupoSanguineo.getGruSanDes().equals(comboBox_GrupoSanguineo.getSelectedItem().toString()))
-                        selecGrupoSanguineo = grupoSanguineo.getGruSanCod();
-                }
-                String selecEstadoCivil = "000000";
-                for (EstadoCivilClass estadoCivil : estadoCivil) {
-                    if (estadoCivil.getEstCivDes().equals(comboBox_EstadoCivil.getSelectedItem().toString()))
-                        selecEstadoCivil = estadoCivil.getEstCivCod();
-                }
-                String selecDiscapacidad = "0";
-                for (SinoClass sino : sino) {
-                    if (sino.getSinDes().equals(comboBox_Discapacidad.getSelectedItem().toString()))
-                        selecDiscapacidad = sino.getSinCod();
-                }
-                String selecControlInmediato = "0";
-                for (SinoClass sino : sino) {
-                    if (sino.getSinDes().equals(comboBox_ControlInmediato.getSelectedItem().toString()))
-                        selecControlInmediato = sino.getSinCod();
-                }
-                String selecSindicalizado = "0";
-                for (SinoClass sino : sino) {
-                    if (sino.getSinDes().equals(comboBox_Sindicalizado.getSelectedItem().toString()))
-                        selecSindicalizado = sino.getSinCod();
-                }
-                String selecSeguro = "0";
-                for (SinoClass sino : sino) {
-                    if (sino.getSinDes().equals(comboBox_Seguro.getSelectedItem().toString()))
-                        selecSeguro = sino.getSinCod();
-                }
-                
                 Statement s = Conexion.obtener().createStatement();
                 PreparedStatement ps = Conexion.obtener().prepareStatement("INSERT INTO `personal` "
                         + "(`PerCod`, `PerApePat`, `PerApeMat`, `PerTraNom`, `PerDocNum`, `PerFecNacAnio`, "
@@ -1156,11 +1166,11 @@ public class Personal extends javax.swing.JFrame {
                         + "'"+correo.getText()+"', '"+telefono.getText()+"', '"+celular.getText()+"', "
                         + "'"+paternoConyuge.getText()+"', '"+maternoConyuge.getText()+"', '"+nombreConyuge.getText()+"', "
                         + "'"+numeroHijos.getValue()+"', '"+otrosIngresos.getText()+"', '"+numeroCuenta.getText()+"', "
-                        + "'"+jComboBox20.getSelectedItem().toString()+"', '"++"', '"++"', "
-                        + "'"++"', '"++"', '"++"', "
-                        + "'"++"', '"++"', '"++"', "
-                        + "'"++"', '"++"', '"++"', "
-                        + "'"++"', '"++"', '"++"', '"++"');");
+                        + "'"+comboBox_EstadoRegistro.getSelectedItem().toString()+"', '"+selecOcupacion()+"', '"+selecRegimenPensionario()+"', "
+                        + "'"+selecBanco()+"', '"+selecSituacionEPS()+"', '"+selecPais()+"', "
+                        + "'"+selecUbigeo()+"', '"+selecEstadoCivil()+"', '"+selecGrupoSanguineo()+"', "
+                        + "'"+selecNivelEducativo()+"', '"+selecSexo()+"', '"+selecTipoDocumento()+"', "
+                        + "'"+selecDiscapacidad()+"', '"+selecSindicalizado()+"', '"+selecSeguro()+"', '"+selecControlInmediato()+"');");
                 ps.execute();
                 ps = Conexion.obtener().prepareStatement("COMMIT;");
                 ps.execute();
@@ -1172,63 +1182,230 @@ public class Personal extends javax.swing.JFrame {
             default:
         }
         try {
-            String sql = "SELECT * FROM regimen_pensionario";
+            String sql = "SELECT * FROM personal";
             Statement s = Conexion.obtener().createStatement();
             ResultSet rs = s.executeQuery(sql);
-            DefaultTableModel model = new DefaultTableModel(new String[]{"Codigo", "SPP CUS","ANO", "MES", "DIA", "Estado", "Tipo"}, 0);
+            DefaultTableModel model = new DefaultTableModel(
+                    new String[]{"Codigo", "Nombre", "APaterno", "AMaterno", "Celular", "Correo", "Estado Registro"}, 0);
             while(rs.next())
             {
-                String d = rs.getString("RegPenCod");
-                String e = rs.getString("RegPenSppCus");
-                String f = rs.getString("RegPenFecInsAnio");
-                String g = rs.getString("RegPenFecInsMes");
-                String h = rs.getString("RegPenFecInsDia");
-                String i = rs.getString("RegPenEstReg");
-                String j = rs.getString("TIPO_REGIMEN_PENSIONARIO_TipRegPenCod");
+                String d = rs.getString("PerCod");
+                String e = rs.getString("PerApePat");
+                String f = rs.getString("PerTraNom");
+                String g = rs.getString("PerApeMat");
+                String h = rs.getString("PerCel");
+                String i = rs.getString("PerCorEle");
+                String j = rs.getString("PerEstReg");
                 model.addRow(new Object[]{d, e, f, g, h, i, j});
             }
             jTable2.setModel(model);
-            //codigo.setText("");
-            
-            //spp_cuspp.setText("");
-            //estado.setSelectedIndex(-1);
         } catch (SQLException ex) {
             Logger.getLogger(TipoTrabajador.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(TipoTrabajador.class.getName()).log(Level.SEVERE, null, ex);
         }
-
+        codigo.setText("");
+        paterno.setText("");
+        materno.setText("");
+        nombre.setText("");
+        documento.setText("");
+        comboBox_tipoDocumento.setSelectedIndex(0);
+        dia.setValue(1);
+        mes.setValue(1);
+        anio.setValue(2017);
+        paternoConyuge.setText("");
+        maternoConyuge.setText("");
+        nombreConyuge.setText("");
+        numeroHijos.setValue(0);
+        comboBox_ocupacion.setSelectedIndex(0);
+        comboBox_Regimen.setSelectedIndex(0);
+        comboBox_Discapacidad.setSelectedIndex(0);
+        comboBox_ControlInmediato.setSelectedIndex(0);
+        comboBox_Sindicalizado.setSelectedIndex(0);
+        comboBox_Seguro.setSelectedIndex(0);
+        comboBox_ubigeo.setSelectedIndex(0);
+        comboBox_pais.setSelectedIndex(0);
+        domicilio.setText("");
+        correo.setText("");
+        telefono.setText("");
+        celular.setText("");
+        otrosIngresos.setText("");
+        numeroCuenta.setText("");
+        comboBox_banco.setSelectedIndex(0);
+        comboBox_nivelEducativoDes.setSelectedIndex(0);
+        comboBox_SituacionEPS.setSelectedIndex(0);
+        comboBox_Sexo.setSelectedIndex(0);
+        comboBox_GrupoSanguineo.setSelectedIndex(0);
+        comboBox_EstadoCivil.setSelectedIndex(0);
+        comboBox_EstadoRegistro.setSelectedIndex(0);
         flag = '_';
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_jButton7ActionPerformed
 
-    private void jButton25ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton25ActionPerformed
-        RegimenPensionario regimenPensionario = new RegimenPensionario();
-        regimenPensionario.setTitle("Regimen Pensionario");
-        try {
-            String sql = "SELECT * FROM regimen_pensionario";
-            Statement s = Conexion.obtener().createStatement();
-            ResultSet rs = s.executeQuery(sql);
-            DefaultTableModel model = new DefaultTableModel(new String[]{"Codigo", "SPP CUS","ANO", "MES", "DIA", "Estado", "Tipo"}, 0);
-            while(rs.next())
-            {
-                String d = rs.getString("RegPenCod");
-                String e = rs.getString("RegPenSppCus");
-                String f = rs.getString("RegPenFecInsAnio");
-                String g = rs.getString("RegPenFecInsMes");
-                String h = rs.getString("RegPenFecInsDia");
-                String i = rs.getString("RegPenEstReg");
-                String j = rs.getString("TIPO_REGIMEN_PENSIONARIO_TipRegPenCod");
-                model.addRow(new Object[]{d, e, f, g, h, i, j});
-            }
-            regimenPensionario.getJTable().setModel(model);
-        } catch (SQLException ex) {
-            Logger.getLogger(NivelEducativo.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(NivelEducativo.class.getName()).log(Level.SEVERE, null, ex);
+    public String selecTipoDocumento () {
+        String selecTipoDocumento = "000000";
+        for (TipoDocumentoClass tipoDocumentoClass : tipoDocumento) {
+            if (tipoDocumentoClass.getTipDocDes().equals(comboBox_tipoDocumento.getSelectedItem().toString()))
+                selecTipoDocumento = tipoDocumentoClass.getTipDocCod();
         }
-        regimenPensionario.comboBox_TipoRegimen();
-        regimenPensionario.setVisible(true);
-    }//GEN-LAST:event_jButton25ActionPerformed
+        return selecTipoDocumento;
+    }
+    
+    public String selecOcupacion () {
+        String selecOcupacion = "000000";
+        for (OcupacionClass ocupacion : ocupacion) {
+            if (ocupacion.getOcuDes().equals(comboBox_ocupacion.getSelectedItem().toString()))
+                selecOcupacion = ocupacion.getOcuCod();
+        }
+        return selecOcupacion;
+    }
+    
+    public String selecRegimenPensionario () {
+        String selecRegimenPensionario = "000000";
+        for (RegimenPensionarioClass regimenPensionario : regimenPensionario) {
+            if (regimenPensionario.getRegPenCod().equals(comboBox_Regimen.getSelectedItem().toString()))
+                selecRegimenPensionario = regimenPensionario.getRegPenCod();
+        }
+        return selecRegimenPensionario;
+    }
+    public String selecPais () {
+        String selecPais = "000000";
+        for (PaisClass pais : pais) {
+            if (pais.getPaiDes().equals(comboBox_pais.getSelectedItem().toString()))
+                selecPais = pais.getPaiCod();
+        }
+        return selecPais;
+    }
+    public String selecBanco () {
+        String selecBanco = "000000";
+        for (BancoClass banco : banco) {
+            if (banco.getBanNom().equals(comboBox_banco.getSelectedItem().toString()))
+                selecBanco = banco.getBanCod();
+        }
+        return selecBanco;
+    }
+    public String selecNivelEducativo () {
+        String selecNivelEducativo = "000000";
+        for (NivelEducativoClass nivelEducativo : nivelEducativo) {
+            if (nivelEducativo.getNivEduDes().equals(comboBox_nivelEducativoDes.getSelectedItem().toString()))
+                selecNivelEducativo = nivelEducativo.getNivEduCod();
+        }
+        return selecNivelEducativo;
+    }
+    public String selecSituacionEPS () {
+        String selecSituacionEPS = "000000";
+        for (SituacionEPSClass situacionEPS : situacionEPS) {
+            if (situacionEPS.getSitEpsDes().equals(comboBox_SituacionEPS.getSelectedItem().toString()))
+                selecSituacionEPS = situacionEPS.getSitEpsCod();
+        }
+        return selecSituacionEPS;
+    }
+    public String selecSexo () {
+        String selecSexo = "000000";
+        for (SexoClass sexo : sexo) {
+            if (sexo.getSexDes().equals(comboBox_Sexo.getSelectedItem().toString()))
+                selecSexo = sexo.getSexCod();
+        }
+        return selecSexo;
+    }
+    public String selecGrupoSanguineo () {
+        String selecGrupoSanguineo = "000000";
+        for (GrupoSanguineoClass grupoSanguineo : grupoSanguineo) {
+            if (grupoSanguineo.getGruSanDes().equals(comboBox_GrupoSanguineo.getSelectedItem().toString()))
+                selecGrupoSanguineo = grupoSanguineo.getGruSanCod();
+        }
+        return selecGrupoSanguineo;
+    }
+    public String selecEstadoCivil () {
+        String selecEstadoCivil = "000000";
+        for (EstadoCivilClass estadoCivil : estadoCivil) {
+            if (estadoCivil.getEstCivDes().equals(comboBox_EstadoCivil.getSelectedItem().toString()))
+                selecEstadoCivil = estadoCivil.getEstCivCod();
+        }
+        return selecEstadoCivil;
+    }
+    public String selecControlInmediato () {
+        String selecControlInmediato = "0";
+        for (SinoClass sino : sino) {
+            if (sino.getSinDes().equals(comboBox_ControlInmediato.getSelectedItem().toString()))
+                selecControlInmediato = sino.getSinCod();
+        }
+        return selecControlInmediato;
+    }
+    public String selecUbigeo () {
+        String selecUbigeo = "000000";
+        for (UbigeoClass ubigeo : ubigeo) {
+            if (ubigeo.getUbiCod().equals(comboBox_ubigeo.getSelectedItem().toString()))
+                selecUbigeo = ubigeo.getUbiCod();
+        }
+        return selecUbigeo;
+    }
+    public String selecDiscapacidad () {
+        String selecDiscapacidad = "0";
+        for (SinoClass sino : sino) {
+            if (sino.getSinDes().equals(comboBox_Discapacidad.getSelectedItem().toString()))
+                selecDiscapacidad = sino.getSinCod();
+        }
+        return selecDiscapacidad;
+    }
+    public String selecSindicalizado () {
+        String selecSindicalizado = "0";
+        for (SinoClass sino : sino) {
+            if (sino.getSinDes().equals(comboBox_Sindicalizado.getSelectedItem().toString()))
+                selecSindicalizado = sino.getSinCod();
+        }
+        return selecSindicalizado;
+    }
+    public String selecSeguro () {
+        String selecSeguro = "0";
+        for (SinoClass sino : sino) {
+            if (sino.getSinDes().equals(comboBox_Seguro.getSelectedItem().toString()))
+                selecSeguro = sino.getSinCod();
+        }
+        return selecSeguro;
+    }
+    
+    
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        flag = 'm';
+        codigo.setText("");
+        paterno.setText("");
+        materno.setText("");
+        nombre.setText("");
+        documento.setText("");
+        comboBox_tipoDocumento.setSelectedIndex(0);
+        dia.setValue(1);
+        mes.setValue(1);
+        anio.setValue(2017);
+        paternoConyuge.setText("");
+        maternoConyuge.setText("");
+        nombreConyuge.setText("");
+        numeroHijos.setValue(0);
+        comboBox_ocupacion.setSelectedIndex(0);
+        comboBox_Regimen.setSelectedIndex(0);
+        comboBox_Discapacidad.setSelectedIndex(0);
+        comboBox_ControlInmediato.setSelectedIndex(0);
+        comboBox_Sindicalizado.setSelectedIndex(0);
+        comboBox_Seguro.setSelectedIndex(0);
+        comboBox_ubigeo.setSelectedIndex(0);
+        comboBox_pais.setSelectedIndex(0);
+        domicilio.setText("");
+        correo.setText("");
+        telefono.setText("");
+        celular.setText("");
+        otrosIngresos.setText("");
+        numeroCuenta.setText("");
+        comboBox_banco.setSelectedIndex(0);
+        comboBox_nivelEducativoDes.setSelectedIndex(0);
+        comboBox_SituacionEPS.setSelectedIndex(0);
+        comboBox_Sexo.setSelectedIndex(0);
+        comboBox_GrupoSanguineo.setSelectedIndex(0);
+        comboBox_EstadoCivil.setSelectedIndex(0);
+        comboBox_EstadoRegistro.setSelectedIndex(0);
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     public void comboBox_Sino() {
         try {
@@ -1578,15 +1755,20 @@ public class Personal extends javax.swing.JFrame {
             String sql = "SELECT * FROM personal";
             Statement s = Conexion.obtener().createStatement();
             ResultSet rs = s.executeQuery(sql);
-            DefaultTableModel model = new DefaultTableModel(new String[]{"Codigo", "Nombre", "Documento"}, 0);
+            DefaultTableModel model = new DefaultTableModel(
+                    new String[]{"Codigo", "Nombre", "APaterno", "AMaterno", "Celular", "Correo", "Estado Registro"}, 0);
             while(rs.next())
             {
                 String d = rs.getString("PerCod");
-                String e = rs.getString("PerTraNom");
-                String f = rs.getString("PerDocNum");
-                model.addRow(new Object[]{d, e, f });
+                String e = rs.getString("PerApePat");
+                String f = rs.getString("PerTraNom");
+                String g = rs.getString("PerApeMat");
+                String h = rs.getString("PerCel");
+                String i = rs.getString("PerCorEle");
+                String j = rs.getString("PerEstReg");
+                model.addRow(new Object[]{d, e, f, g, h, i, j});
             }
-            personal.jTable2.setModel(model);
+            personal.getJTable().setModel(model);
         } catch (SQLException ex) {
         Logger.getLogger(TipoDocumento.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
@@ -1614,6 +1796,7 @@ public class Personal extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> comboBox_ControlInmediato;
     private javax.swing.JComboBox<String> comboBox_Discapacidad;
     private javax.swing.JComboBox<String> comboBox_EstadoCivil;
+    private javax.swing.JComboBox<String> comboBox_EstadoRegistro;
     private javax.swing.JComboBox<String> comboBox_GrupoSanguineo;
     private javax.swing.JComboBox<String> comboBox_Regimen;
     private javax.swing.JComboBox<String> comboBox_Seguro;
@@ -1650,7 +1833,6 @@ public class Personal extends javax.swing.JFrame {
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
-    private javax.swing.JComboBox<String> jComboBox20;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
