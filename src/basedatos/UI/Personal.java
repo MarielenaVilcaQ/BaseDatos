@@ -1371,6 +1371,26 @@ public class Personal extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         flag = 'm';
+        try {
+            int row = jTable2.getSelectedRow();
+            String sql = "SELECT * FROM personal WHERE `PerCod` = '"+ jTable2.getValueAt(row, 0) + "" +"';";
+            Statement s = Conexion.obtener().createStatement();
+            ResultSet rs = s.executeQuery(sql);
+            while(rs.next())
+            {
+                String d = rs.getString("PerCod");
+                String e = rs.getString("PerApePat");
+                String f = rs.getString("PerTraNom");
+                String g = rs.getString("PerApeMat");
+                String h = rs.getString("PerCel");
+                String i = rs.getString("PerCorEle");
+                String j = rs.getString("PerEstReg");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(TipoTrabajador.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(TipoTrabajador.class.getName()).log(Level.SEVERE, null, ex);
+        }
         codigo.setText("");
         paterno.setText("");
         materno.setText("");
