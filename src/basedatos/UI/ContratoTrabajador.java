@@ -820,7 +820,6 @@ public class ContratoTrabajador extends javax.swing.JFrame {
         Logger.getLogger(TipoDocumento.class.getName()).log(Level.SEVERE, null, ex);
         }
         personal.comboBox_tipoDocumento();
-        personal.radioButtons();
         personal.setVisible(true);
     }//GEN-LAST:event_jButton16ActionPerformed
 
