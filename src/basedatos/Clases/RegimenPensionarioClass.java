@@ -84,4 +84,5 @@ public class RegimenPensionarioClass {
     public void setTIPO_REGIMEN_PENSIONARIO_TipRegPenCod(String TIPO_REGIMEN_PENSIONARIO_TipRegPenCod) {
         this.TIPO_REGIMEN_PENSIONARIO_TipRegPenCod = TIPO_REGIMEN_PENSIONARIO_TipRegPenCod;
     }
+    
 }

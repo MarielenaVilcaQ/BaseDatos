@@ -4,11 +4,29 @@
  * and open the template in the editor.
  */
 package basedatos.UI;
+import basedatos.Clases.BancoClass;
+import basedatos.Clases.CategoriaAcademicaClass;
+import basedatos.Clases.EstadoCivilClass;
+import basedatos.Clases.GrupoSanguineoClass;
+import basedatos.Clases.NivelEducativoClass;
+import basedatos.Clases.OcupacionClass;
+import basedatos.Clases.PaisClass;
+import basedatos.Clases.RegimenClass;
 import basedatos.Clases.RegimenPensionarioClass;
+import basedatos.Clases.SedeClass;
+import basedatos.Clases.SexoClass;
+import basedatos.Clases.SituacionEPSClass;
+import basedatos.Clases.TipoContratoClass;
+import basedatos.Clases.TipoDocumentoClass;
 import basedatos.Clases.TipoRegimenClass;
+import basedatos.Clases.TipoTrabajorClass;
+import basedatos.Clases.UbigeoClass;
 import basedatos.Conexion;
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -19,6 +37,7 @@ import java.util.logging.Logger;
 import javax.swing.ButtonGroup;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -27,8 +46,18 @@ import javax.swing.table.DefaultTableModel;
  */
 public class Personal extends javax.swing.JFrame {
     
-    TipoDocumento tipoDocumento;
-    ArrayList<RegimenPensionarioClass> regimen;
+    char flag = '_';
+    ArrayList<TipoDocumentoClass> tipoDocumento;
+    ArrayList<RegimenPensionarioClass> regimenPensionario;
+    ArrayList<OcupacionClass> ocupacion;
+    ArrayList<UbigeoClass> ubigeo;
+    ArrayList<PaisClass> pais;
+    ArrayList<BancoClass> banco;
+    ArrayList<NivelEducativoClass> nivelEducativo;
+    ArrayList<SituacionEPSClass> situacionEPS;
+    ArrayList<SexoClass> sexo;
+    ArrayList<GrupoSanguineoClass> grupoSanguineo;
+    ArrayList<EstadoCivilClass> estadoCivil;
 
     /**
      * Creates new form Personal
@@ -117,8 +146,6 @@ public class Personal extends javax.swing.JFrame {
         jButton9 = new javax.swing.JButton();
         jLabel16 = new javax.swing.JLabel();
         jTextField15 = new javax.swing.JTextField();
-        jLabel29 = new javax.swing.JLabel();
-        jButton10 = new javax.swing.JButton();
         jLabel35 = new javax.swing.JLabel();
         jButton11 = new javax.swing.JButton();
         jButton14 = new javax.swing.JButton();
@@ -143,7 +170,6 @@ public class Personal extends javax.swing.JFrame {
         SeguroSi = new javax.swing.JRadioButton();
         SeguroNo = new javax.swing.JRadioButton();
         comboBox_Regimen = new javax.swing.JComboBox<>();
-        jComboBox2 = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -253,9 +279,14 @@ public class Personal extends javax.swing.JFrame {
         ));
         jScrollPane2.setViewportView(jTable2);
 
-        jComboBox20.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "A", "*" }));
+        jComboBox20.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "A", "I", "*" }));
 
         jButton1.setText("Adicionar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("Modificar");
 
@@ -279,15 +310,6 @@ public class Personal extends javax.swing.JFrame {
         });
 
         jLabel16.setText("Codigo");
-
-        jLabel29.setText("Contrato trabajor");
-
-        jButton10.setText("Contrato Trabajador");
-        jButton10.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton10ActionPerformed(evt);
-            }
-        });
 
         jLabel35.setText("Estado registro");
 
@@ -397,8 +419,6 @@ public class Personal extends javax.swing.JFrame {
 
         comboBox_Regimen.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -407,181 +427,176 @@ public class Personal extends javax.swing.JFrame {
                 .addGap(25, 25, 25)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton16, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton7, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton8, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel4)
-                                .addGap(36, 36, 36)
-                                .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(comboBox_tipoDocumento, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton11, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel5)
-                                .addGap(48, 48, 48)
-                                .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(60, 60, 60)
-                                .addComponent(jLabel18))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel22)
-                                .addGap(107, 107, 107)
-                                .addComponent(comboBox_ocupacion, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton14, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel23)
-                                    .addComponent(jLabel27)
-                                    .addComponent(jLabel31)
-                                    .addComponent(jLabel33))
-                                .addGap(46, 46, 46)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(comboBox_Regimen, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addComponent(SindicalizadoSi)
-                                            .addComponent(DescapacidadSi)
-                                            .addComponent(ControlInmediatoSi))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(DescapacidadNo)
-                                            .addComponent(SindicalizadoNo)
-                                            .addComponent(ControlInmediatoNo)))))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel12)
-                                    .addComponent(jLabel11)
-                                    .addComponent(jLabel10)
-                                    .addComponent(jLabel3)
-                                    .addComponent(jLabel2)
-                                    .addComponent(jLabel1)
-                                    .addComponent(jLabel16)
-                                    .addComponent(jLabel13))
-                                .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jTextField10)
-                                    .addComponent(jTextField3)
-                                    .addComponent(jTextField1)
-                                    .addComponent(jTextField2)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(24, 24, 24)
-                                        .addComponent(jSpinner2, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(48, 48, 48)
-                                        .addComponent(jSpinner3, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(jLabel19)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jSpinner4, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(jTextField15)
-                                    .addComponent(jTextField11, javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jTextField9, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel29)
-                                .addGap(18, 18, 18)
-                                .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(116, 116, 116)
-                                .addComponent(jTextField5))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel30)
-                                    .addComponent(jLabel28)
-                                    .addComponent(jLabel26)
-                                    .addComponent(jLabel25)
-                                    .addComponent(jLabel24)
-                                    .addComponent(jLabel21)
-                                    .addComponent(jLabel15)
-                                    .addComponent(jLabel14)
-                                    .addComponent(jLabel9)
-                                    .addComponent(jLabel35))
-                                .addGap(12, 12, 12)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jTextField8)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jTextField13, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(comboBox_banco, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jButton12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                    .addComponent(jTextField12, javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                            .addComponent(jComboBox20, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(comboBox_EstadoCivil, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(comboBox_GrupoSanguineo, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(comboBox_SituacionEPS, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                                .addComponent(comboBox_nivelEducativoDes, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(jButton16, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jButton7, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jButton3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGap(18, 18, 18)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jButton4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jButton8, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(layout.createSequentialGroup()
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(jLabel4)
+                                    .addGap(36, 36, 36)
+                                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(comboBox_tipoDocumento, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(jButton11, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(jLabel5)
+                                    .addGap(48, 48, 48)
+                                    .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(60, 60, 60)
+                                    .addComponent(jLabel18))
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jLabel23)
+                                        .addComponent(jLabel27)
+                                        .addComponent(jLabel31)
+                                        .addComponent(jLabel33))
+                                    .addGap(46, 46, 46)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addComponent(comboBox_Regimen, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                            .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addComponent(DescapacidadSi)
+                                                .addComponent(SindicalizadoSi)
+                                                .addComponent(ControlInmediatoSi))
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addComponent(ControlInmediatoNo)
+                                                .addComponent(SindicalizadoNo)
+                                                .addComponent(DescapacidadNo)))))
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jLabel12)
+                                        .addComponent(jLabel11)
+                                        .addComponent(jLabel10)
+                                        .addComponent(jLabel3)
+                                        .addComponent(jLabel2)
+                                        .addComponent(jLabel1)
+                                        .addComponent(jLabel16)
+                                        .addComponent(jLabel13)
+                                        .addComponent(jLabel22))
+                                    .addGap(18, 18, 18)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(jTextField10)
+                                            .addComponent(jTextField3)
+                                            .addComponent(jTextField1)
+                                            .addComponent(jTextField2)
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addGap(24, 24, 24)
+                                                .addComponent(jSpinner2, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(48, 48, 48)
+                                                .addComponent(jSpinner3, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                .addComponent(jLabel19)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(jComboBox7, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                            .addComponent(comboBox_Sexo, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jButton13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(jButton15, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(jButton17, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(jButton18, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(jButton19, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(SeguroSi)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(SeguroNo)
-                                        .addGap(0, 0, Short.MAX_VALUE))))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel7)
-                                    .addComponent(jLabel8))
-                                .addGap(12, 12, 12)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jTextField7)
-                                    .addComponent(jTextField6)))
-                            .addComponent(jLabel6)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel34)
-                                    .addComponent(jLabel20))
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(78, 78, 78)
-                                        .addComponent(comboBox_pais, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jButton21, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(77, 77, 77)
-                                        .addComponent(comboBox_ubigeo, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jButton22, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))))
+                                                .addComponent(jSpinner4, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addComponent(jTextField15)
+                                            .addComponent(jTextField11, javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(jTextField9, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addComponent(comboBox_ocupacion, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                            .addComponent(jButton14, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGap(116, 116, 116)
+                                    .addComponent(jTextField5))
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jLabel30)
+                                        .addComponent(jLabel28)
+                                        .addComponent(jLabel26)
+                                        .addComponent(jLabel25)
+                                        .addComponent(jLabel24)
+                                        .addComponent(jLabel21)
+                                        .addComponent(jLabel15)
+                                        .addComponent(jLabel14)
+                                        .addComponent(jLabel9)
+                                        .addComponent(jLabel35))
+                                    .addGap(12, 12, 12)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jTextField8)
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addComponent(jTextField13, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                            .addComponent(comboBox_banco, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                            .addComponent(jButton12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                        .addComponent(jTextField12, javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                                .addComponent(jComboBox20, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(comboBox_EstadoCivil, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(comboBox_GrupoSanguineo, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(comboBox_SituacionEPS, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                                    .addComponent(comboBox_nivelEducativoDes, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                    .addComponent(jComboBox7, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addComponent(comboBox_Sexo, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addComponent(jButton13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(jButton15, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(jButton17, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(jButton18, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(jButton19, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addComponent(SeguroSi)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                            .addComponent(SeguroNo)
+                                            .addGap(0, 0, Short.MAX_VALUE))))
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jLabel7)
+                                        .addComponent(jLabel8))
+                                    .addGap(12, 12, 12)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jTextField7)
+                                        .addComponent(jTextField6)))
+                                .addComponent(jLabel6)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jLabel34)
+                                        .addComponent(jLabel20))
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addGap(78, 78, 78)
+                                            .addComponent(comboBox_pais, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                            .addComponent(jButton21, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addGap(77, 77, 77)
+                                            .addComponent(comboBox_ubigeo, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                            .addComponent(jButton22, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))))
                 .addGap(25, 25, 25))
         );
         layout.setVerticalGroup(
@@ -592,161 +607,154 @@ public class Personal extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel16)
-                            .addComponent(jTextField15, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel29)
-                            .addComponent(jButton10)
-                            .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jTextField15, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel1)
+                            .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel2)
+                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel3)
+                            .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel4)
+                            .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton11)
+                            .addComponent(comboBox_tipoDocumento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(8, 8, 8)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel17)
+                                    .addComponent(jLabel18)
+                                    .addComponent(jLabel19)
+                                    .addComponent(jSpinner2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jSpinner3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jSpinner4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel5)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel10)
+                            .addComponent(jTextField9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel11)
+                            .addComponent(jTextField10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel12)
+                            .addComponent(jTextField11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(9, 9, 9)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel13)
+                            .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel22)
+                            .addComponent(comboBox_ocupacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton14))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel23)
+                            .addComponent(comboBox_Regimen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton9))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel27)
+                            .addComponent(DescapacidadSi)
+                            .addComponent(DescapacidadNo))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel31)
+                            .addComponent(SindicalizadoSi)
+                            .addComponent(SindicalizadoNo))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel33)
+                            .addComponent(ControlInmediatoSi)
+                            .addComponent(ControlInmediatoNo)))
+                    .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 442, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel6)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jLabel1)
-                                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel2)
-                                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel3)
-                                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel4)
-                                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jButton11)
-                                    .addComponent(comboBox_tipoDocumento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(8, 8, 8)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                            .addComponent(jLabel17)
-                                            .addComponent(jLabel18)
-                                            .addComponent(jLabel19)
-                                            .addComponent(jSpinner2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jSpinner3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jSpinner4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jLabel5)))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel10)
-                                    .addComponent(jTextField9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel11)
-                                    .addComponent(jTextField10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel12)
-                                    .addComponent(jTextField11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(9, 9, 9)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel13)
-                                    .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(34, 34, 34)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(3, 3, 3)
-                                        .addComponent(jLabel22))
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(comboBox_ocupacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(jButton14)))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel23)
-                                    .addComponent(jButton9)
-                                    .addComponent(comboBox_Regimen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(13, 13, 13)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel27)
-                                    .addComponent(DescapacidadSi)
-                                    .addComponent(DescapacidadNo))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel31)
-                                    .addComponent(SindicalizadoSi)
-                                    .addComponent(SindicalizadoNo))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel33)
-                                    .addComponent(ControlInmediatoSi)
-                                    .addComponent(ControlInmediatoNo)))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel20)
-                                    .addComponent(comboBox_ubigeo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jButton22))
-                                .addGap(7, 7, 7)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel34)
-                                    .addComponent(comboBox_pais, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jButton21))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel7)
-                                    .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel8)
-                                    .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel9)
-                                    .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel14)
-                                    .addComponent(jTextField12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel15)
-                                    .addComponent(jTextField13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(comboBox_banco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jButton12))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel21)
-                                    .addComponent(comboBox_nivelEducativoDes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jComboBox7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jButton13))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel24)
-                                    .addComponent(comboBox_SituacionEPS, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jButton15))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel25)
-                                    .addComponent(comboBox_Sexo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jButton17))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel26)
-                                    .addComponent(comboBox_GrupoSanguineo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jButton18))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel28)
-                                    .addComponent(comboBox_EstadoCivil, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jButton19))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel30)
-                                    .addComponent(SeguroSi)
-                                    .addComponent(SeguroNo))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel35)
-                                    .addComponent(jComboBox20, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                    .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 442, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel20)
+                            .addComponent(comboBox_ubigeo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton22))
+                        .addGap(7, 7, 7)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel34)
+                            .addComponent(comboBox_pais, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton21))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel7)
+                            .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel8)
+                            .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel9)
+                            .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel14)
+                            .addComponent(jTextField12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel15)
+                            .addComponent(jTextField13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(comboBox_banco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton12))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel21)
+                            .addComponent(comboBox_nivelEducativoDes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jComboBox7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton13))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel24)
+                            .addComponent(comboBox_SituacionEPS, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton15))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel25)
+                            .addComponent(comboBox_Sexo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton17))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel26)
+                            .addComponent(comboBox_GrupoSanguineo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton18))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel28)
+                            .addComponent(comboBox_EstadoCivil, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton19))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel30)
+                            .addComponent(SeguroSi)
+                            .addComponent(SeguroNo))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel35)
+                            .addComponent(jComboBox20, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -770,14 +778,6 @@ public class Personal extends javax.swing.JFrame {
     private void comboBox_SituacionEPSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboBox_SituacionEPSActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_comboBox_SituacionEPSActionPerformed
-
-    private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
-        ContratoTrabajador contratoTrabajador = new ContratoTrabajador();
-        contratoTrabajador.setTitle("Contrato Trabajador");
-        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-                contratoTrabajador.setLocation(dim.width/2-contratoTrabajador.getSize().width/2, dim.height/2-contratoTrabajador.getSize().height/2);
-        contratoTrabajador.setVisible(true);
-    }//GEN-LAST:event_jButton10ActionPerformed
 
     private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
         RegimenPensionario regimenPensionario = new RegimenPensionario();
@@ -809,7 +809,7 @@ public class Personal extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton9ActionPerformed
 
     private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
-        tipoDocumento = new TipoDocumento();
+        TipoDocumento tipoDocumento = new TipoDocumento();
         tipoDocumento.setTitle("Tipo de Documento");
         try {
         String sql = "SELECT * FROM tipo_documento";
@@ -857,17 +857,7 @@ public class Personal extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton14ActionPerformed
 
     private void jButton16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton16ActionPerformed
-        comboBox_tipoDocumento();
-        comboBox_ocupacion();
-        comboBox_ubigeo();
-        comboBox_pais();
-        comboBox_banco();
-        comboBox_nivelEducativo();
-        comboBox_SituacionEPS();
-        comboBox_Sexo();
-        comboBox_GrupoSanguineo();
-        comboBox_EstadoCivil();
-        comboBox_RegimenPensionario();
+        
     }//GEN-LAST:event_jButton16ActionPerformed
 
     private void jTextField13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField13ActionPerformed
@@ -1069,41 +1059,225 @@ public class Personal extends javax.swing.JFrame {
         estadoCivil.setVisible(true);
     }//GEN-LAST:event_jButton19ActionPerformed
 
-        public void comboBox_EstadoCivil() {
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         try {
-            ArrayList<String> pais = new ArrayList<String>();
+            PreparedStatement ps = Conexion.obtener().prepareStatement("START TRANSACTION;");
+            ps.execute();
+        } catch (SQLException ex) {
+            Logger.getLogger(TipoTrabajador.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(TipoTrabajador.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        switch(flag)
+        {
+            case 'm':
+            try {
+                Statement s = Conexion.obtener().createStatement();
+                //PreparedStatement ps = Conexion.obtener().prepareStatement("UPDATE `tipo_regimen_pensionario`"
+                //    + "SET `afp_AfpCod` = '"+ codigoafp.getText() +"', `TipRegPenDes` = '"
+                //    + descripcion.getText()+"', `TipRegPenEstReg` = '"+ estado.getText() +"'"
+                //    + "WHERE `tipo_regimen_pensionario`.`TipRegPenCod` = '"+ codigo.getText() +"'; ");
+                //ps.execute();
+                //ps = Conexion.obtener().prepareStatement("COMMIT;");
+                //ps.execute();
+            } catch (SQLException ex) {
+                Logger.getLogger(TipoTrabajador.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(TipoTrabajador.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            break;
+            case 'e':
+            try {
+                Statement s = Conexion.obtener().createStatement();
+                //PreparedStatement ps = Conexion.obtener().prepareStatement("UPDATE `tipo_regimen_pensionario`"
+                //    + "SET `TipRegPenEstReg` = '*' "
+                //    + "WHERE `tipo_regimen_pensionario`.`TipRegPenCod` = '"+ codigo.getText() +"'; ");
+                //ps.execute();
+                //ps = Conexion.obtener().prepareStatement("COMMIT;");
+                //ps.execute();
+            } catch (SQLException ex) {
+                Logger.getLogger(TipoTrabajador.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(TipoTrabajador.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            break;
+            case 'i':
+            try {
+                Statement s = Conexion.obtener().createStatement();
+                //PreparedStatement ps = Conexion.obtener().prepareStatement("UPDATE `tipo_regimen_pensionarioo`"
+                //    + "SET `TipRegPenEstReg` = 'I' "
+                //    + "WHERE `tipo_regimen_pensionario`.`TipRegPenCod` = '"+ codigo.getText() +"'; ");
+                //ps.execute();
+                //ps = Conexion.obtener().prepareStatement("COMMIT;");
+                //ps.execute();
+            } catch (SQLException ex) {
+                Logger.getLogger(TipoTrabajador.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(TipoTrabajador.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            break;
+            case 'r':
+            try {
+                Statement s = Conexion.obtener().createStatement();
+                //PreparedStatement ps = Conexion.obtener().prepareStatement("UPDATE `tipo_regimen_pensionario`"
+                //    + "SET `TipRegPenEstReg` = 'A'"
+                //    + "WHERE `tipo_regimen_pensionario`.`TipRegPenCod` = '"+ codigo.getText() +"'; ");
+                //ps.execute();
+                //ps = Conexion.obtener().prepareStatement("COMMIT;");
+                //ps.execute();
+            } catch (SQLException ex) {
+                Logger.getLogger(TipoTrabajador.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(TipoTrabajador.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            break;
+            case 'a':
+            try {
+                //Buscar codigo
+                String selecTipoDocumento = "000000";
+                for (TipoDocumentoClass tipoDocumentoClass : tipoDocumento) {
+                    if (tipoDocumentoClass.getTipDocDes().equals(comboBox_tipoDocumento.getSelectedItem().toString()))
+                        selecTipoDocumento = tipoDocumentoClass.getTipDocCod();
+                }
+                String selecOcupacion = "000000";
+                for (OcupacionClass ocupacion : ocupacion) {
+                    if (ocupacion.getOcuDes().equals(comboBox_ocupacion.getSelectedItem().toString()))
+                        selecOcupacion = ocupacion.getOcuCod();
+                }
+                String selecRegimenPensionario = "000000";
+                for (RegimenPensionarioClass regimenPensionario : regimenPensionario) {
+                    if (regimenPensionario.getRegPenCod().equals(comboBox_ocupacion.getSelectedItem().toString()))
+                        selecRegimenPensionario = regimenPensionario.getRegPenCod();
+                }
+                String selecPais = "000000";
+                for (PaisClass pais : pais) {
+                    if (pais.getPaiDes().equals(comboBox_pais.getSelectedItem().toString()))
+                        selecPais = pais.getPaiCod();
+                }
+                String selecBanco = "000000";
+                for (BancoClass banco : banco) {
+                    if (banco.getBanNom().equals(comboBox_banco.getSelectedItem().toString()))
+                        selecBanco = banco.getBanCod();
+                }
+                String selecNivelEducativo = "000000";
+                for (NivelEducativoClass nivelEducativo : nivelEducativo) {
+                    if (nivelEducativo.getNivEduDes().equals(comboBox_nivelEducativoDes.getSelectedItem().toString()))
+                        selecNivelEducativo = nivelEducativo.getNivEduCod();
+                }
+                String selecSituacionEPS = "000000";
+                for (SituacionEPSClass situacionEPS : situacionEPS) {
+                    if (situacionEPS.getSitEpsDes().equals(comboBox_SituacionEPS.getSelectedItem().toString()))
+                        selecSituacionEPS = situacionEPS.getSitEpsCod();
+                }
+                String selecSexo = "000000";
+                for (SexoClass sexo : sexo) {
+                    if (sexo.getSexDes().equals(comboBox_Sexo.getSelectedItem().toString()))
+                        selecSexo = sexo.getSexCod();
+                }
+                String selecGrupoSanguineo = "000000";
+                for (GrupoSanguineoClass grupoSanguineo : grupoSanguineo) {
+                    if (grupoSanguineo.getGruSanDes().equals(comboBox_GrupoSanguineo.getSelectedItem().toString()))
+                        selecGrupoSanguineo = grupoSanguineo.getGruSanCod();
+                }
+                String selecEstadoCivil = "000000";
+                for (EstadoCivilClass estadoCivil : estadoCivil) {
+                    if (estadoCivil.getEstCivDes().equals(comboBox_EstadoCivil.getSelectedItem().toString()))
+                        selecEstadoCivil = estadoCivil.getEstCivCod();
+                }
+                Statement s = Conexion.obtener().createStatement();
+                //PreparedStatement ps = Conexion.obtener().prepareStatement("INSERT INTO `regimen_pensionario` "
+                //        + "(`RegPenCod`, `RegPenSppCus`, `RegPenFecInsAnio`, `RegPenFecInsMes`, "
+                //        + "`RegPenFecInsDia`, `RegPenEstReg`, `TIPO_REGIMEN_PENSIONARIO_TipRegPenCod`) "
+                //        + "VALUES ('" + codigo.getText() + "', '" + Text_spp_cuspp.getText() + "', '" + anio.getValue() + "', '"
+                //        + mes.getValue() + "', '" + dia.getValue() + "', '" + estado.getSelectedItem() + "', '" + selecTipoTrabajador + "');");
+                //ps.execute();
+                //ps = Conexion.obtener().prepareStatement("COMMIT;");
+                //ps.execute();
+            } catch (SQLException ex) {
+                Logger.getLogger(TipoTrabajador.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(TipoTrabajador.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            default:
+        }
+        try {
+            String sql = "SELECT * FROM regimen_pensionario";
+            Statement s = Conexion.obtener().createStatement();
+            ResultSet rs = s.executeQuery(sql);
+            DefaultTableModel model = new DefaultTableModel(new String[]{"Codigo", "SPP CUS","ANO", "MES", "DIA", "Estado", "Tipo"}, 0);
+            while(rs.next())
+            {
+                String d = rs.getString("RegPenCod");
+                String e = rs.getString("RegPenSppCus");
+                String f = rs.getString("RegPenFecInsAnio");
+                String g = rs.getString("RegPenFecInsMes");
+                String h = rs.getString("RegPenFecInsDia");
+                String i = rs.getString("RegPenEstReg");
+                String j = rs.getString("TIPO_REGIMEN_PENSIONARIO_TipRegPenCod");
+                model.addRow(new Object[]{d, e, f, g, h, i, j});
+            }
+            jTable2.setModel(model);
+            //codigo.setText("");
+            
+            //spp_cuspp.setText("");
+            //estado.setSelectedIndex(-1);
+        } catch (SQLException ex) {
+            Logger.getLogger(TipoTrabajador.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(TipoTrabajador.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        flag = '_';
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    public void comboBox_EstadoCivil() {
+        try {
+            estadoCivil = new ArrayList<EstadoCivilClass>();
             String sql = "SELECT * FROM estado_civil";
             Statement s = Conexion.obtener().createStatement();
             ResultSet rs = s.executeQuery(sql);
             while(rs.next())
             {
                 if (rs.getString("EstCivEstReg").equals("A")) {
-                    pais.add(rs.getString("EstCivDes"));
+                    estadoCivil.add(new EstadoCivilClass(
+                            rs.getString("EstCivCod"),
+                            rs.getString("EstCivDes"),
+                            rs.getString("EstCivEstReg")));
                 }
             }
-            String[] arraytipoDocumento = pais.toArray(new String[0]);
-            comboBox_EstadoCivil.setModel(new javax.swing.DefaultComboBoxModel(arraytipoDocumento));;
+            String [] arrEstadoCivil = new String [estadoCivil.size()];
+            for (int i = 0; i < arrEstadoCivil.length; i++) {
+                arrEstadoCivil[i] = estadoCivil.get(i).getEstCivDes();
+            }
+            comboBox_EstadoCivil.setModel(new javax.swing.DefaultComboBoxModel(arrEstadoCivil));;
         } catch (SQLException ex) {
-        Logger.getLogger(TipoDocumento.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(TipoDocumento.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
-        Logger.getLogger(TipoDocumento.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(TipoDocumento.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
     public void comboBox_GrupoSanguineo() {
         try {
-            ArrayList<String> pais = new ArrayList<String>();
+            grupoSanguineo = new ArrayList<GrupoSanguineoClass>();
             String sql = "SELECT * FROM grupo_sanguineo";
             Statement s = Conexion.obtener().createStatement();
             ResultSet rs = s.executeQuery(sql);
             while(rs.next())
             {
                 if (rs.getString("GruSanEstReg").equals("A")) {
-                    pais.add(rs.getString("GruSanDes"));
+                    grupoSanguineo.add(new GrupoSanguineoClass(
+                            rs.getString("GruSanCod"),
+                            rs.getString("GruSanDes"),
+                            rs.getString("GruSanEstReg")));
                 }
             }
-            String[] arraytipoDocumento = pais.toArray(new String[0]);
-            comboBox_GrupoSanguineo.setModel(new javax.swing.DefaultComboBoxModel(arraytipoDocumento));;
+            String [] arrGrupoSanguineo = new String [grupoSanguineo.size()];
+            for (int i = 0; i < arrGrupoSanguineo.length; i++) {
+                arrGrupoSanguineo[i] = grupoSanguineo.get(i).getGruSanDes();
+            }
+            comboBox_GrupoSanguineo.setModel(new javax.swing.DefaultComboBoxModel(arrGrupoSanguineo));;
         } catch (SQLException ex) {
         Logger.getLogger(TipoDocumento.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
@@ -1113,18 +1287,24 @@ public class Personal extends javax.swing.JFrame {
     
     public void comboBox_Sexo() {
         try {
-            ArrayList<String> pais = new ArrayList<String>();
+            sexo = new ArrayList<SexoClass>();
             String sql = "SELECT * FROM sexo";
             Statement s = Conexion.obtener().createStatement();
             ResultSet rs = s.executeQuery(sql);
             while(rs.next())
             {
                 if (rs.getString("SexEstReg").equals("A")) {
-                    pais.add(rs.getString("SexDes"));
+                    sexo.add(new SexoClass(
+                            rs.getString("SexCod"),
+                            rs.getString("SexDes"),
+                            rs.getString("SexEstReg")));
                 }
             }
-            String[] arraytipoDocumento = pais.toArray(new String[0]);
-            comboBox_Sexo.setModel(new javax.swing.DefaultComboBoxModel(arraytipoDocumento));;
+            String [] arrSexo = new String [sexo.size()];
+            for (int i = 0; i < arrSexo.length; i++) {
+                arrSexo[i] = sexo.get(i).getSexDes();
+            }
+            comboBox_Sexo.setModel(new javax.swing.DefaultComboBoxModel(arrSexo));;
         } catch (SQLException ex) {
         Logger.getLogger(TipoDocumento.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
@@ -1134,18 +1314,24 @@ public class Personal extends javax.swing.JFrame {
     
     public void comboBox_SituacionEPS() {
         try {
-            ArrayList<String> pais = new ArrayList<String>();
+            situacionEPS = new ArrayList<SituacionEPSClass>();
             String sql = "SELECT * FROM situacion_eps";
             Statement s = Conexion.obtener().createStatement();
             ResultSet rs = s.executeQuery(sql);
             while(rs.next())
             {
                 if (rs.getString("SitEpsEstReg").equals("A")) {
-                    pais.add(rs.getString("SitEpsDes"));
+                    situacionEPS.add(new SituacionEPSClass(
+                            rs.getString("SitEpsCod"),
+                            rs.getString("SitEpsDes"),
+                            rs.getString("SitEpsEstReg")));
                 }
             }
-            String[] arraytipoDocumento = pais.toArray(new String[0]);
-            comboBox_SituacionEPS.setModel(new javax.swing.DefaultComboBoxModel(arraytipoDocumento));;
+            String [] arrSituacionEPS = new String [situacionEPS.size()];
+            for (int i = 0; i < arrSituacionEPS.length; i++) {
+                arrSituacionEPS[i] = situacionEPS.get(i).getSitEpsDes();
+            }
+            comboBox_SituacionEPS.setModel(new javax.swing.DefaultComboBoxModel(arrSituacionEPS));;
         } catch (SQLException ex) {
         Logger.getLogger(TipoDocumento.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
@@ -1153,40 +1339,54 @@ public class Personal extends javax.swing.JFrame {
         }
     }
     
-    public void comboBox_nivelEducativo() {
+    public void comboBox_nivelEducativoDes() {
         try {
-            ArrayList<String> pais = new ArrayList<String>();
-            String sql = "SELECT * FROM nivel_educativo";
+            nivelEducativo = new ArrayList<NivelEducativoClass>();
+            String sql = "SELECT * FROM banco";
             Statement s = Conexion.obtener().createStatement();
             ResultSet rs = s.executeQuery(sql);
             while(rs.next())
             {
                 if (rs.getString("NivEduEstReg").equals("A")) {
-                    pais.add(rs.getString("NivEduDes"));
+                    nivelEducativo.add(new NivelEducativoClass(
+                            rs.getString("NivEduCod"),
+                            rs.getString("NivEduDes"),
+                            rs.getString("NivEduNivGra"),
+                            rs.getString("NivEduEstReg")));
                 }
             }
-            String[] arraytipoDocumento = pais.toArray(new String[0]);
-            comboBox_nivelEducativoDes.setModel(new javax.swing.DefaultComboBoxModel(arraytipoDocumento));;
+            String [] arrNivelEducativo = new String [nivelEducativo.size()];
+            for (int i = 0; i < arrNivelEducativo.length; i++) {
+                arrNivelEducativo[i] = nivelEducativo.get(i).getNivEduDes();
+            }
+            comboBox_nivelEducativoDes.setModel(new javax.swing.DefaultComboBoxModel(arrNivelEducativo));;
         } catch (SQLException ex) {
         Logger.getLogger(TipoDocumento.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
         Logger.getLogger(TipoDocumento.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
     public void comboBox_banco() {
         try {
-            ArrayList<String> pais = new ArrayList<String>();
+            banco = new ArrayList<BancoClass>();
             String sql = "SELECT * FROM banco";
             Statement s = Conexion.obtener().createStatement();
             ResultSet rs = s.executeQuery(sql);
             while(rs.next())
             {
                 if (rs.getString("BanEstReg").equals("A")) {
-                    pais.add(rs.getString("BanNom"));
+                    banco.add(new BancoClass(
+                            rs.getString("BanCod"),
+                            rs.getString("BanNom"),
+                            rs.getString("BanEstReg")));
                 }
             }
-            String[] arraytipoDocumento = pais.toArray(new String[0]);
-            comboBox_banco.setModel(new javax.swing.DefaultComboBoxModel(arraytipoDocumento));;
+            String [] arrBanco = new String [banco.size()];
+            for (int i = 0; i < arrBanco.length; i++) {
+                arrBanco[i] = banco.get(i).getBanNom();
+            }
+            comboBox_banco.setModel(new javax.swing.DefaultComboBoxModel(arrBanco));;
         } catch (SQLException ex) {
         Logger.getLogger(TipoDocumento.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
@@ -1194,20 +1394,26 @@ public class Personal extends javax.swing.JFrame {
         }
     }
     
-    public void comboBox_pais () {
+    public void comboBox_pais() {
         try {
-            ArrayList<String> pais = new ArrayList<String>();
+            pais = new ArrayList<PaisClass>();
             String sql = "SELECT * FROM pais";
             Statement s = Conexion.obtener().createStatement();
             ResultSet rs = s.executeQuery(sql);
             while(rs.next())
             {
                 if (rs.getString("PaiEstReg").equals("A")) {
-                    pais.add(rs.getString("PaiDes"));
+                    pais.add(new PaisClass(
+                            rs.getString("PaiCod"),
+                            rs.getString("PaiDes"),
+                            rs.getString("PaiEstReg")));
                 }
             }
-            String[] arraytipoDocumento = pais.toArray(new String[0]);
-            comboBox_pais.setModel(new javax.swing.DefaultComboBoxModel(arraytipoDocumento));;
+            String [] arrPais = new String [pais.size()];
+            for (int i = 0; i < arrPais.length; i++) {
+                arrPais[i] = pais.get(i).getPaiDes();
+            }
+            comboBox_pais.setModel(new javax.swing.DefaultComboBoxModel(arrPais));;
         } catch (SQLException ex) {
         Logger.getLogger(TipoDocumento.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
@@ -1215,41 +1421,54 @@ public class Personal extends javax.swing.JFrame {
         }
     }
     
-    public void comboBox_ubigeo () {
+    public void comboBox_ubigeo() {
         try {
-            ArrayList<String> ubigeo = new ArrayList<String>();
+            ubigeo = new ArrayList<UbigeoClass>();
             String sql = "SELECT * FROM ubigeo";
             Statement s = Conexion.obtener().createStatement();
             ResultSet rs = s.executeQuery(sql);
             while(rs.next())
             {
                 if (rs.getString("UbiEstReg").equals("A")) {
-                    ubigeo.add(rs.getString("UbiDep") + rs.getString("UbiPro") + rs.getString("UbiDis"));
+                    ubigeo.add(new UbigeoClass(
+                            rs.getString("UbiCod"),
+                            rs.getString("UbiDep"),
+                            rs.getString("UbiPro"),
+                            rs.getString("UbiDis"),
+                            rs.getString("UbiEstReg")));
                 }
             }
-            String[] arraytipoDocumento = ubigeo.toArray(new String[0]);
-            comboBox_ubigeo.setModel(new javax.swing.DefaultComboBoxModel(arraytipoDocumento));;
+            String [] arrUbigeo = new String [ubigeo.size()];
+            for (int i = 0; i < arrUbigeo.length; i++) {
+                arrUbigeo[i] = ubigeo.get(i).getUbiCod();
+            }
+            comboBox_ubigeo.setModel(new javax.swing.DefaultComboBoxModel(arrUbigeo));;
         } catch (SQLException ex) {
         Logger.getLogger(TipoDocumento.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
         Logger.getLogger(TipoDocumento.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-    public void comboBox_ocupacion () {
+        
+    public void comboBox_ocupacion() {
         try {
-            ArrayList<String> tipoDocumento = new ArrayList<String>();
+            ocupacion = new ArrayList<OcupacionClass>();
             String sql = "SELECT * FROM ocupacion";
             Statement s = Conexion.obtener().createStatement();
             ResultSet rs = s.executeQuery(sql);
             while(rs.next())
             {
-                if (rs.getString("OcuEstReg").equals("A")) {
-                    tipoDocumento.add(rs.getString("OcuDes"));
+                if (rs.getString("OcuEstReg").equals("1")) {
+                    ocupacion.add(new OcupacionClass(rs.getString("OcuCod"),
+                            rs.getString("OcuDes"),
+                            rs.getString("OcuEstReg")));
                 }
             }
-            String[] arraytipoDocumento = tipoDocumento.toArray(new String[0]);
-            comboBox_ocupacion.setModel(new javax.swing.DefaultComboBoxModel(arraytipoDocumento));;
+            String [] arrOcupacion = new String [ocupacion.size()];
+            for (int i = 0; i < arrOcupacion.length; i++) {
+                arrOcupacion[i] = ocupacion.get(i).getOcuDes();
+            }
+            comboBox_ocupacion.setModel(new javax.swing.DefaultComboBoxModel(arrOcupacion));;
         } catch (SQLException ex) {
         Logger.getLogger(TipoDocumento.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
@@ -1257,45 +1476,54 @@ public class Personal extends javax.swing.JFrame {
         }
     }
     
-    public void comboBox_tipoDocumento () {
+    public void comboBox_Regimen() {
         try {
-            ArrayList<String> tipoDocumento = new ArrayList<String>();
-            String sql = "SELECT * FROM tipo_documento";
-            Statement s = Conexion.obtener().createStatement();
-            ResultSet rs = s.executeQuery(sql);
-            while(rs.next())
-            {
-                if (rs.getString("TipDocEstReg").equals("A")) {
-                    tipoDocumento.add(rs.getString("TipDocDes"));
-                }
-            }
-            String[] arraytipoDocumento = tipoDocumento.toArray(new String[0]);
-            comboBox_tipoDocumento.setModel(new javax.swing.DefaultComboBoxModel(arraytipoDocumento));;
-        } catch (SQLException ex) {
-        Logger.getLogger(TipoDocumento.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
-        Logger.getLogger(TipoDocumento.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-    
-    public void comboBox_RegimenPensionario() {
-        try {
-            regimen = new ArrayList<RegimenPensionarioClass>();
+            regimenPensionario = new ArrayList<RegimenPensionarioClass>();
             String sql = "SELECT * FROM regimen_pensionario";
             Statement s = Conexion.obtener().createStatement();
             ResultSet rs = s.executeQuery(sql);
             while(rs.next())
             {
                 if (rs.getString("RegPenEstReg").equals("A")) {
-                    regimen.add(new RegimenPensionarioClass (rs.getString("RegPenCod"), rs.getString("RegPenSppCus"), rs.getString("RegPenFecInsAnio"),
-                    rs.getString("RegPenFecInsMes"), rs.getString("RegPenFecInsDia"), rs.getString("RegPenEstReg"), rs.getString("TIPO_REGIMEN_PENSIONARIO_TipRegPenCod")));
+                    regimenPensionario.add(new RegimenPensionarioClass(rs.getString("RegPenCod"),
+                            rs.getString("RegPenSppCus"),
+                            rs.getString("RegPenFecInsAnio"),
+                            rs.getString("RegPenFecInsMes"),
+                            rs.getString("RegPenFecInsDia"),
+                            rs.getString("RegPenEstReg"),
+                            rs.getString("TIPO_REGIMEN_PENSIONARIO_TipRegPenCod")));
                 }
             }
-            String [] arrRegimen = new String [regimen.size()];
-            for (int i = 0; i < arrRegimen.length; i++) {
-                arrRegimen[i] = regimen.get(i).getRegPenSppCus();
+            String [] arrRegimenPensionario = new String [regimenPensionario.size()];
+            for (int i = 0; i < arrRegimenPensionario.length; i++) {
+                arrRegimenPensionario[i] = regimenPensionario.get(i).getRegPenCod();
             }
-            comboBox_Regimen.setModel(new javax.swing.DefaultComboBoxModel(arrRegimen));;
+            comboBox_Regimen.setModel(new javax.swing.DefaultComboBoxModel(arrRegimenPensionario));;
+        } catch (SQLException ex) {
+        Logger.getLogger(TipoDocumento.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+        Logger.getLogger(TipoDocumento.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void comboBox_tipoDocumento() {
+        try {
+            tipoDocumento = new ArrayList<TipoDocumentoClass>();
+            String sql = "SELECT * FROM tipo_documento";
+            Statement s = Conexion.obtener().createStatement();
+            ResultSet rs = s.executeQuery(sql);
+            while(rs.next())
+            {
+                if (rs.getString("TipDocEstReg").equals("A")) {
+                    tipoDocumento.add(new TipoDocumentoClass(rs.getString("TipDocCod"), rs.getString("TipDocDes"),
+                            rs.getString("TipDocEstReg")));
+                }
+            }
+            String [] arrtipoDocumento = new String [tipoDocumento.size()];
+            for (int i = 0; i < arrtipoDocumento.length; i++) {
+                arrtipoDocumento[i] = tipoDocumento.get(i).getTipDocDes();
+            }
+            comboBox_tipoDocumento.setModel(new javax.swing.DefaultComboBoxModel(arrtipoDocumento));;
         } catch (SQLException ex) {
         Logger.getLogger(TipoDocumento.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
@@ -1303,6 +1531,27 @@ public class Personal extends javax.swing.JFrame {
         }
     }
     
+    public void radioButtons () {
+        ButtonGroup grupoDescapacidad = new ButtonGroup();
+        grupoDescapacidad.add(DescapacidadSi);
+        grupoDescapacidad.add(DescapacidadNo);
+       
+        ButtonGroup sindicalizado = new ButtonGroup();
+        sindicalizado.add(SindicalizadoSi);
+        sindicalizado.add(SindicalizadoNo);
+        
+        ButtonGroup controlInmediato = new ButtonGroup();
+        controlInmediato.add(ControlInmediatoSi);
+        controlInmediato.add(ControlInmediatoNo);
+        
+        ButtonGroup seguro = new ButtonGroup();
+        seguro.add(SeguroSi);
+        seguro.add(SeguroNo);
+    }
+    
+    public JTable getJTable () {
+        return jTable2;
+    }
     
     /**
      * @param args the command line arguments
@@ -1332,34 +1581,8 @@ public class Personal extends javax.swing.JFrame {
         } catch (ClassNotFoundException ex) {
         Logger.getLogger(TipoDocumento.class.getName()).log(Level.SEVERE, null, ex);
         }
-        ButtonGroup grupoDescapacidad = new ButtonGroup();
-        grupoDescapacidad.add(personal.DescapacidadSi);
-        grupoDescapacidad.add(personal.DescapacidadNo);
-       
-        ButtonGroup sindicalizado = new ButtonGroup();
-        sindicalizado.add(personal.SindicalizadoSi);
-        sindicalizado.add(personal.SindicalizadoNo);
-        
-        ButtonGroup controlInmediato = new ButtonGroup();
-        controlInmediato.add(personal.ControlInmediatoSi);
-        controlInmediato.add(personal.ControlInmediatoNo);
-        
-        ButtonGroup seguro = new ButtonGroup();
-        seguro.add(personal.SeguroSi);
-        seguro.add(personal.SeguroNo);
-        
-        
         personal.comboBox_tipoDocumento();
-        personal.comboBox_ocupacion();
-        personal.comboBox_ubigeo();
-        personal.comboBox_pais();
-        personal.comboBox_banco();
-        personal.comboBox_nivelEducativo();
-        personal.comboBox_SituacionEPS();
-        personal.comboBox_Sexo();
-        personal.comboBox_GrupoSanguineo();
-        personal.comboBox_EstadoCivil();
-        personal.comboBox_RegimenPensionario();
+        personal.radioButtons();
         personal.setVisible(true);
     }
 
@@ -1384,7 +1607,6 @@ public class Personal extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> comboBox_tipoDocumento;
     private javax.swing.JComboBox<String> comboBox_ubigeo;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton11;
     private javax.swing.JButton jButton12;
     private javax.swing.JButton jButton13;
@@ -1404,7 +1626,6 @@ public class Personal extends javax.swing.JFrame {
     private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
     private javax.swing.JButton jButton9;
-    private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JComboBox<String> jComboBox20;
     private javax.swing.JComboBox<String> jComboBox7;
     private javax.swing.JLabel jLabel1;
@@ -1428,7 +1649,6 @@ public class Personal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel26;
     private javax.swing.JLabel jLabel27;
     private javax.swing.JLabel jLabel28;
-    private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel30;
     private javax.swing.JLabel jLabel31;

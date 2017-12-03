@@ -795,7 +795,33 @@ public class ContratoTrabajador extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextField3ActionPerformed
 
     private void jButton16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton16ActionPerformed
-        // TODO add your handling code here:
+        Personal personal = new Personal();
+        personal.setVisible(true);
+        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+        personal.setLocation(dim.width/2-personal.getSize().width/2, dim.height/2-personal.getSize().height/2);
+        personal.setTitle("Personal");
+        try {
+            //Llenar tabla de registrados
+            String sql = "SELECT * FROM personal";
+            Statement s = Conexion.obtener().createStatement();
+            ResultSet rs = s.executeQuery(sql);
+            DefaultTableModel model = new DefaultTableModel(new String[]{"Codigo", "Nombre", "Documento"}, 0);
+            while(rs.next())
+            {
+                String d = rs.getString("PerCod");
+                String e = rs.getString("PerTraNom");
+                String f = rs.getString("PerDocNum");
+                model.addRow(new Object[]{d, e, f });
+            }
+            personal.getJTable().setModel(model);
+        } catch (SQLException ex) {
+        Logger.getLogger(TipoDocumento.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+        Logger.getLogger(TipoDocumento.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        personal.comboBox_tipoDocumento();
+        personal.radioButtons();
+        personal.setVisible(true);
     }//GEN-LAST:event_jButton16ActionPerformed
 
     private void jButton15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton15ActionPerformed
